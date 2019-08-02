@@ -1,0 +1,32 @@
+{
+  "name": "social-app",
+  "version": "1.0.0",
+  "description": "Social App",
+  "scripts": {
+    "init-config-files": "node scripts/init-config-files.js",
+    "init:client": "cd client && npm run init",
+    "init:server": "cd server/functions && npm run init",
+    "init:deps": "npm run init:client && npm run init:server",
+    "init:mobile": "cd mobile && npm run init",
+    "setup": "node ./scripts/verify && npm run init-config-files && npm run init:deps && npm run build",
+    "start": "cd client && npm run start",
+    "build": "cd client && npm run build",
+    "test": "cd client && npm run test",
+    "device": "cd mobile && cordova prepare && cordova run android --device",
+    "server": "cd server/functions && npm run serve",
+    "deploy": "cd server/functions && npm run deploy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wahid-racheh/social-app.git"
+  },
+  "author": "Racheh Wahid <racheh.wahid@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wahid-racheh/social-app/issues"
+  },
+  "homepage": "https://github.com/wahid-racheh/social-app#readme",
+  "devDependencies": {
+    "path": "^0.12.7"
+  }
+}
