@@ -5,7 +5,7 @@ const os = require("os");
 const fs = require("fs");
 const { Storage } = require("@google-cloud/storage");
 
-const { config } = require("../scripts/utils");
+const { config } = require("../utils/helpers");
 
 const storage = new Storage({
   projectId: config.firebaseConfig.projectId,

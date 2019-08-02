@@ -58,9 +58,9 @@ const readJSONFile = filename => {
   return JSON.parse(readFileSync(filename));
 };
 
-const getAppConfigs = () => {
-  return readJSONFile(path.resolve(__dirname, "../", "app-configs.json"));
+const getAppConfig = () => {
+  return readJSONFile(path.resolve(__dirname, "../", "app-config.json"));
 };
 
 exports.readJSONFile = readJSONFile;
-exports.config = getAppConfigs();
+exports.config = getAppConfig();

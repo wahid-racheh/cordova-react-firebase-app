@@ -82,7 +82,7 @@
     "start": "npm run proxy && node scripts/start.js",
     "build": "npm run proxy && npm run set-mobile-runtime && node scripts/build.js && npm run cp-mobile-runtime",
     "test": "npm run proxy && node scripts/test.js",
-    "init": "npde npm i"
+    "init": "npm i"
   },
   "eslintConfig": {
     "extends": "react-app"

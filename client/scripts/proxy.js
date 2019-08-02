@@ -2,7 +2,7 @@ const path = require("path");
 const { readJSONFileSync, writeJSONFileSync } = require("./utils");
 
 const proxyFileName = "proxy.json";
-const serverConfigFileName = "configs.json";
+const serverConfigFileName = "app-config.json";
 
 const serverConfig = readJSONFileSync(
   path.resolve(__dirname, "../../server/functions/", serverConfigFileName)

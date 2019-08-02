@@ -6,7 +6,7 @@ const {
 
 const { respondSuccess, respondFailure } = require("../utils/helpers");
 
-const { config } = require("../scripts/utils");
+const { config } = require("../utils/helpers");
 
 // Register a new user
 exports.signup = (req, res) => {
