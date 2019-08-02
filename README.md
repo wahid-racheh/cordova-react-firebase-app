@@ -1,0 +1,1 @@
+# cordova-react-firebase-app
