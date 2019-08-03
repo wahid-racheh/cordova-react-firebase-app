@@ -55,18 +55,42 @@ at [Troubleshooting](#troubleshooting). If you can't work it out on your own
 then please [file an issue][issue] and provide _all_ the output from the
 commands you ran (even if it's a lot).
 
-### Initialize firebase environment
+### Initialize firebase console
 
 - Login to your firebase console and create a new application
 
-- Once the application created, setup firbase storage
+- Once the application created, add a new web application:
+
+  1. Go to firebase console
+  2. Select your project
+  3. Go to project settings
+  4. Select general parameters tab
+  5. Scroll down to applications section
+  6. Add a new web application to your project
+
+- Setup authentication method
+
+  1. Go to firebase console
+  2. Select your project
+  3. Click on authentication menu
+  4. Select Connection mode tab
+  5. Enable e-mail address/password method
+
+- Initialize database
+
+  1. Go to firebase console
+  2. Select your project
+  3. Click on database menu
+  4. Initialize the database
+
+- Initialize storage
 
   1. Go to firebase console
   2. Select your project
   3. Click on storage menu
-  4. Initialize firebase storage
-  5. Choose a cloud location (example : **europe-west2**)
-  6. Then continue the firebase storage configuration and then click on rules tab
+  4. Initialize the storage
+  5. Choose a cloud location (example : **europe-west2**) and validate.
+  6. Then click on rules tab
   7. Replace your current rules by the following one:
 
   ```ts
@@ -80,104 +104,101 @@ commands you ran (even if it's a lot).
   }
   ```
 
-- Setup firebase database
+### Setup application config file
+
+- Set firebase cloud location:
 
   1. Go to firebase console
   2. Select your project
-  3. Click on database menu
-  4. Initialize firebase database
+  3. Go to project settings
+  4. Select general parameters tab
+  5. Copy the cloud resource location value (example : **europe-west2**) and replace the **region** property value in your **server/functions/app-config.json**.
 
-- Setup firebase authentication method
-
-  1. Go to firebase console
-  2. Select your project
-  3. Select Connection mode tab
-  4. Enable e-mail address/password method
-
-- Setup firebase cloud location:
+- Set firebase config section:
 
   1. Go to firebase console
   2. Select your project
-  3. Select general parameters tab
-  4. Copy the cloud resource location value (example : **europe-west2**) and replace the **region** property value in your **server/functions/app-config.json**.
-
-- Setup firebase config section:
-
-  1. Go to firebase console
-  2. Select project settings
-  3. Select general parameters tab
-  4. Add new web application
-  5. Select your new web application in applications section
+  3. Go to project settings
+  4. Select general parameters tab
+  5. Select your web application in applications section
   6. Under Firebase SDK snippet, select Configuration radio button
   7. Then, replace your **firebaseConfig** section in **server/functions/app-config.json** file by your firebase configurations:
 
-     ```json
-     {
-       "firebaseConfig": {
-         "apiKey": "",
-         "authDomain": "",
-         "databaseURL": "",
-         "projectId": "",
-         "storageBucket": "",
-         "messagingSenderId": "",
-         "appId": ""
-       }
-     }
-     ```
+  ```json
+  {
+    "firebaseConfig": {
+      "apiKey": "",
+      "authDomain": "",
+      "databaseURL": "",
+      "projectId": "",
+      "storageBucket": "",
+      "messagingSenderId": "",
+      "appId": ""
+    }
+  }
+  ```
 
-     **If you find that [storageBucket]() is empty, just wait a moment and refrech your firebase console untill the configuration get updated.**
+  **If you find that [storageBucket](#storageBucket) is empty, just wait a moment and refrech your firebase console untill the configuration get updated.**
 
-- Setup firebase certificate :
+- Set firebase certificate :
 
   1. Go to firebase console
-  1. Select project settings
-  1. Select Service accounts tab
-  1. Click on generate a new private key. This will let you download the project certificate json file
-  1. Then, replace your **privateCertificate** section in **server/functions/app-config.json** file by the downloaded certificate content:
-     ```json
-     {
-       "privateCertificate": {
-         "type": "",
-         "project_id": "",
-         "private_key_id": "",
-         "private_key": "",
-         "client_email": "",
-         "client_id": "",
-         "auth_uri": "",
-         "token_uri": "",
-         "auth_provider_x509_cert_url": "",
-         "client_x509_cert_url": ""
-       }
-     }
-     ```
+  2. Select your project
+  3. Go to project settings
+  4. Select Service accounts tab
+  5. Click on generate a new private key. This will let you download the project certificate json file
+  6. Then, replace your **privateCertificate** section in **server/functions/app-config.json** file by the downloaded certificate content:
 
-- Setup firebase default project id
+  ```json
+  {
+    "privateCertificate": {
+      "type": "",
+      "project_id": "",
+      "private_key_id": "",
+      "private_key": "",
+      "client_email": "",
+      "client_id": "",
+      "auth_uri": "",
+      "token_uri": "",
+      "auth_provider_x509_cert_url": "",
+      "client_x509_cert_url": ""
+    }
+  }
+  ```
 
-  1. Copy **project_id** property value from your **server/functions/app-config.json**
+- Set firebase default project id
+
+  1. Copy [project_id](#project_id) property value from your **server/functions/app-config.json**
   2. Then replace **default property value** in your **server/.firebaserc** file:
 
-     ```json
-     {
-       "projects": {
-         "default": ""
-       }
-     }
-     ```
+  ```json
+  {
+    "projects": {
+      "default": ""
+    }
+  }
+  ```
+
+- Now that you've made all the configurations, login to your firebase account using command line interface and deploy your firebase apis:
+
+  ```
+  $ firebase login
+  $ npm run deploy
+  ```
+
+### Setup database indexes
 
 - Add database indexes:
 
-  Replace [project_id]() in the following http requests by your firebase project id and request them in your browser :
+  Replace [project_id](#project_id) in the following http requests by your firebase project id and request them in your browser :
 
-  1. `https://console.firebase.google.com/project/`[project_id]()`/database/firestore/indexes?create_composite=Clxwcm9qZWN0cy9jb3Jkb3ZhLXJlYWN0LWZpcmViYXNlL2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9ub3RpZmljYXRpb25zL2luZGV4ZXMvXxABGg0KCXJlY2lwaWVudBABGg0KCWNyZWF0ZWRBdBACGgwKCF9fbmFtZV9fEAI`
+  1. `https://console.firebase.google.com/project/`[project_id](#project_id)`/database/firestore/indexes?create_composite=Clxwcm9qZWN0cy9jb3Jkb3ZhLXJlYWN0LWZpcmViYXNlL2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9ub3RpZmljYXRpb25zL2luZGV4ZXMvXxABGg0KCXJlY2lwaWVudBABGg0KCWNyZWF0ZWRBdBACGgwKCF9fbmFtZV9fEAI`
 
-  2. `https://console.firebase.google.com/project/`[project_id]()`/database/firestore/indexes?create_composite=Cldwcm9qZWN0cy9jb3Jkb3ZhLXJlYWN0LWZpcmViYXNlL2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9jb21tZW50cy9pbmRleGVzL18QARoOCgp1c2VySGFuZGxlEAEaDQoJY3JlYXRlZEF0EAIaDAoIX19uYW1lX18QAg`
+  2. `https://console.firebase.google.com/project/`[project_id](#project_id)`/database/firestore/indexes?create_composite=Cldwcm9qZWN0cy9jb3Jkb3ZhLXJlYWN0LWZpcmViYXNlL2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9jb21tZW50cy9pbmRleGVzL18QARoOCgp1c2VySGFuZGxlEAEaDQoJY3JlYXRlZEF0EAIaDAoIX19uYW1lX18QAg`
 
-  3. Now that you've made all the configurations, login to your firebase account using command line interface and deploy your firebase apis:
+  3. `https://console.firebase.google.com/project/`[project_id](#project_id)`/database/firestore/indexes?create_composite=ClZwcm9qZWN0cy9jb3Jkb3ZhLXJlYWN0LWZpcmViYXNlL2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9zY3JlYW1zL2luZGV4ZXMvXxABGg4KCnVzZXJIYW5kbGUQARoNCgljcmVhdGVkQXQQAhoMCghfX25hbWVfXxAC`
 
-     ```
-     $ firebase login
-     $ npm run deploy
-     ```
+  4. `https://console.firebase.google.com/project/`[project_id](#project_id)`/database/firestore/indexes?create_composite=Cldwcm9qZWN0cy9jb3Jkb3ZhLXJlYWN0LWZpcmViYXNlL2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9jb21tZW50cy9pbmRleGVzL18QARoMCghzY3JlYW1JZBABGg0KCWNyZWF0ZWRBdBACGgwKCF9fbmFtZV9fEAI`
 
 ## Running and deploying the server
 
@@ -225,8 +246,6 @@ npm start
 ```
 
 This should start up your browser.
-
-You can also open [the deployment of the app on Netlify](https://advanced-react-patterns.netlify.com/).
 
 - To build the app, run:
 
