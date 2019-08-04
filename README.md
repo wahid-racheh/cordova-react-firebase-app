@@ -76,14 +76,22 @@ commands you ran (even if it's a lot).
   4. Select Connection mode tab
   5. Enable e-mail address/password method
 
-- Initialize database
+- Setup database
 
   1. Go to firebase console
   2. Select your project
   3. Click on database menu
   4. Initialize the database
+  5. Add database indexes:
 
-- Initialize storage
+     Copy your [project_id](#project_id) from your project general settings and replace it in the following http requests and then, request them in your browser :
+
+     - `https://console.firebase.google.com/project/`[project_id](#project_id)`/database/firestore/indexes?create_composite=Clxwcm9qZWN0cy9jb3Jkb3ZhLXJlYWN0LWZpcmViYXNlL2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9ub3RpZmljYXRpb25zL2luZGV4ZXMvXxABGg0KCXJlY2lwaWVudBABGg0KCWNyZWF0ZWRBdBACGgwKCF9fbmFtZV9fEAI`
+     - `https://console.firebase.google.com/project/`[project_id](#project_id)`/database/firestore/indexes?create_composite=Cldwcm9qZWN0cy9jb3Jkb3ZhLXJlYWN0LWZpcmViYXNlL2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9jb21tZW50cy9pbmRleGVzL18QARoOCgp1c2VySGFuZGxlEAEaDQoJY3JlYXRlZEF0EAIaDAoIX19uYW1lX18QAg`
+     - `https://console.firebase.google.com/project/`[project_id](#project_id)`/database/firestore/indexes?create_composite=ClZwcm9qZWN0cy9jb3Jkb3ZhLXJlYWN0LWZpcmViYXNlL2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9zY3JlYW1zL2luZGV4ZXMvXxABGg4KCnVzZXJIYW5kbGUQARoNCgljcmVhdGVkQXQQAhoMCghfX25hbWVfXxAC`
+     - `https://console.firebase.google.com/project/`[project_id](#project_id)`/database/firestore/indexes?create_composite=Cldwcm9qZWN0cy9jb3Jkb3ZhLXJlYWN0LWZpcmViYXNlL2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9jb21tZW50cy9pbmRleGVzL18QARoMCghzY3JlYW1JZBABGg0KCWNyZWF0ZWRBdBACGgwKCF9fbmFtZV9fEAI`
+
+- Setup storage
 
   1. Go to firebase console
   2. Select your project
@@ -185,20 +193,6 @@ commands you ran (even if it's a lot).
   $ firebase login
   $ npm run deploy
   ```
-
-### Setup database indexes
-
-- Add database indexes:
-
-  Replace [project_id](#project_id) in the following http requests by your firebase project id and request them in your browser :
-
-  1. `https://console.firebase.google.com/project/`[project_id](#project_id)`/database/firestore/indexes?create_composite=Clxwcm9qZWN0cy9jb3Jkb3ZhLXJlYWN0LWZpcmViYXNlL2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9ub3RpZmljYXRpb25zL2luZGV4ZXMvXxABGg0KCXJlY2lwaWVudBABGg0KCWNyZWF0ZWRBdBACGgwKCF9fbmFtZV9fEAI`
-
-  2. `https://console.firebase.google.com/project/`[project_id](#project_id)`/database/firestore/indexes?create_composite=Cldwcm9qZWN0cy9jb3Jkb3ZhLXJlYWN0LWZpcmViYXNlL2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9jb21tZW50cy9pbmRleGVzL18QARoOCgp1c2VySGFuZGxlEAEaDQoJY3JlYXRlZEF0EAIaDAoIX19uYW1lX18QAg`
-
-  3. `https://console.firebase.google.com/project/`[project_id](#project_id)`/database/firestore/indexes?create_composite=ClZwcm9qZWN0cy9jb3Jkb3ZhLXJlYWN0LWZpcmViYXNlL2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9zY3JlYW1zL2luZGV4ZXMvXxABGg4KCnVzZXJIYW5kbGUQARoNCgljcmVhdGVkQXQQAhoMCghfX25hbWVfXxAC`
-
-  4. `https://console.firebase.google.com/project/`[project_id](#project_id)`/database/firestore/indexes?create_composite=Cldwcm9qZWN0cy9jb3Jkb3ZhLXJlYWN0LWZpcmViYXNlL2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9jb21tZW50cy9pbmRleGVzL18QARoMCghzY3JlYW1JZBABGg0KCWNyZWF0ZWRBdBACGgwKCF9fbmFtZV9fEAI`
 
 ## Running and deploying the server
 
