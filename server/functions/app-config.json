@@ -1,25 +1,25 @@
 {
-  "region": "europe-west2",
+  "region": "europe-west1",
   "whitelist": ["https://cordova-react-firebase.netlify.com"],
   "privateCertificate": {
     "type": "service_account",
-    "project_id": "test-poc-fc935",
-    "private_key_id": "9b32739f4ad63c26405d5a7eb1f2a68c958eea1b",
-    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCv7zUPY7lm3jBS\ncwTGF2+TsH0bSfi2m9p8twB6DcGM/bumjYY45pV+ugi9g+B2IEjnEryach3625GH\nvLd5/e+M7ecxQ4oLyx5VS9pFayXtef3PrMdzWi9gYf8VzOKAgR6GmS7JMHZ6LLYe\neuuSZ20OB16x2ABDyFkdHx5h9BkfN+2KVrxK+lxuvOFd5XQENjmpRbCrgMLaQ0uO\nXWmvNWaZQLGPp6MKoyDZMNpg/6EfSBabxS9AdpN9yjcfxkEDMIVoXk66iyl3+new\nM2AdmoFk/XQmQ3hC6Y+H2JCOG7BkgwrkhPvtTJORen2lZYgGxamJsycJVxgZ+/Qc\n5UmZ4oxXAgMBAAECggEACY5SRnoMhEmF5w83mimEYPQ8HLMBiaxLdhdb35qcVwki\ncSMiFY3ItEUXMRwBoXOSzMztZkIpM1/2YUtfIobSxR0tlTUYQW27QbdzV+6Vn8wk\nJ2yOD3Y9job5cPiw8M6SluL+ceUU+laFXysesn61o1vDyUsfMI9S78xUknjMsy+i\nSg1PuFJabePehcMtGHHR14k5oKvLNsJyeahAl/gdY+BOJVBnRZCzavFtIIoTqKXA\n7yNB2vGgJpeqRkym1lowu5dETsOWv6sBLrqyQgWuyjZ4NLHHa5vyl715CLhaAGMh\njqhBQS8YsxbNujan9sf0SVUwDHboKAiMBNm1h+G0SQKBgQDtXaxlgxyX8jMjH2qY\nMtKxK5bBZKA5qgQuwkxYNk2iWjLHEiKaAtF3vMVrrv/0hbCDsdcQ9B9FHcB4qvgA\nwQfBoYfLvX6Y0kgZ9NSUVHr8LvCimEeoYGccycWdT6/g5AscRVrQUiJvBjkglR7e\nuxM+Ly2lbFX2gj4/EEMSdqDtCwKBgQC9vvLxhjNwOvnzogKyIihTMu7VQBxOm70Y\nCwmYRsa7HQ9BwLjw6quwkWplhDJu6kbv7x5NmuM5vklN1khClV1zIC7CzOuQ9uJ3\nHR0vUJhCHsc+sEoAWlIOwKiHi+VSdQxTFLC7rAQPJbhychROh3c6GAlHSi7yD1wv\nKNg4s411ZQKBgQDYdeVCSXeo5TlXHU5C744N/ZckU9R94Zqg3ZVrmFHh7WmC+vnN\nAybsj5xloBhQcB5Rarua/VUK3Z/pKtixL1cYcGr7FJq/WHxiF1BI2GWzVkchr8ch\nOJCvwx1QYRwd9ThglqrDcTNvlfhAy1x0d5uLyNBSm+IkxA9pyTWxP7dvkwKBgQCz\ni8JbZP+7jTMDpSQj50p9H877n0Sp5ZiS7a7QlvhqCl9rerAF2ClKVO92zBbk+W7S\nj1P/XzbwZuz6aG/MAYaB78wPrNSjQdqdl8EMCplox7MF0M7VcqH/L7LJQElpMzTM\nUOHDVEwrASh9sxEgFfNt11zARqQRjRNP1Lh1PwH2OQKBgCNnI1KPpoVdeaEzgrIb\nDUg2EZ9kaH2Yy4QL3AT0x0MwFaTtAuA8qcx5CiQJTWe+YmNdbDRBCUW/TGOZFnK5\nBQg6QmWFEDRD9PIFBWCdcLdCqAyjBFzNsslrkHCNyeyyOJXkVUhbZNys5MWQEvl4\n+1kST/Akk8aDbjERCF2PS1sP\n-----END PRIVATE KEY-----\n",
-    "client_email": "firebase-adminsdk-lbcwf@test-poc-fc935.iam.gserviceaccount.com",
-    "client_id": "101208360207007638418",
+    "project_id": "socialapp-d2a96",
+    "private_key_id": "fba09df8ab2ab0480f5762648a477153d9735032",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCxqH6u5kZpCJkf\n+qdumtnCs3l/Bcol6Abx09KSHe14nwfE6znRhTDkaEPn11oy3Ah4cH8lMUPKU/uI\nKonoBQigSpw303G9o6QWD8ojS9+JO8SuHHeV3Nu+huLpmHUt6E0ceNvPiEgEE+h8\n64AWLPwyGRPJCOog3MRZFhzul8rwRmt7EqY5t9k0O8NPMdfgJbx7u4LWWggBilLm\nDhsjpDlOKpK0sUv3w7myzYzoICAoN+Xj5FhIssNMmLj6OHir2pkfjB/hqO6gPo78\nRf5NnZMb9N4AnrswFjmIYjGWz1GXNdfTAW+45fZzXu96TjxLs9i/kb8QaGp/0GSa\nwVvcGItJAgMBAAECggEAEwUaAvmOTOJpxQhdx96g36e9TdcTLE8Up0E+nabB7L8B\n4u2CtCa79EghX6nTnfb779ZYwQ+ZgAjRDg6X0xTu4SemZTz9mV2dTJYGKxSNawYm\nFAniLP4x3HUDyBnVZG58CvH5fn91o6d0pXhvrxrD0/fmrAgzS1oMqgj5sfri9CmN\nghduKirg5ECOoEfbhhRfwI1jCkpwrjA/8JF/dGlxa1ckiKJn9+Dn3srL9RO9PHfK\n/EuqemQhPdEVz8YywYQrWbhauFVJL5lH5ND0brXPOeFzK3c1rGRpLwtZO2LJsgbm\nYRohxPPBZ3c7K7jgRW9B3mt99XHa/6MODXS9NqVm/QKBgQDduU7aeYNbR8WK9hX+\ndf9xXaOFBR3heoa2x+/S0yjtTaKgN8rFFv/a4B6pMQvwZKefmrgVQo28N/tX1Wf8\n1Ic+2DxYCrnWr1SeyAIpvH8NJ5X9fjLVuEAeM5sLmLGxSc7xnXpsEinYD95vKGBQ\ngFhems3W/LApT4GKW2DpIcj/9wKBgQDNH0spsX/e05YKZLfV115ztIWJx0G1qh3Q\ngaYrM5zPQ2oLkwNtJQ9VThRth0r6QVrnI3VzDM/FyL9yaC4NP9lx1BMKCYD1fXRD\nofLCyTO2QvY1SEjzF47gbPkmHJ4XaZvD5lVfjqWbFzwN1wR7ZKEOvV/Pkp0a1fdL\n+AeBsop+vwKBgDG8eLi/Wzzlm6VxUDu1YmietaiIHkzO/FsR/HURUvPwX1OLUFvn\nrdr+PUJ8sw3otkUyIqr6M+sNr77jKyFm1zO8s8SYG1nSGKxJd1q/YsyjnZywa1zP\nqOpdbyEpzmpTgS1nwudtJ5/E54ONzhUgxTHrjdL0+ds6b3eGyfVh08G/AoGBAKVE\nOGgAVllvOq1nFuMZYkVxRkKLI3s99EWhoAOg0w//bfqjWZhfyqndfgH9hsB5Vcdz\nP1cSFHlz1CRWofwU3Jqk1y44GAozKTCw1Apy19Jaw0qM0hHigkB6LIezeQC+Gz1M\nYK7cHLwHjWBNRJQysL1SgVaZ9zC/Aj/YOBwcgQ+7AoGAMYtDRzOGInahuJrzKff3\nOtULgXGMWtB0sG+DqTZnjTdTnb+D5vXB6hEAuYU90/KHhPYPethqpmg9cKT5A7l5\nHKQGhaauP3V4pSk8kXB4p+gGN/DuUXs6Mnu1uimD3eKpPBkJhFnu/j9/fTvtqpTR\nRy7Igv9xZyG3RN1PK3Timjc=\n-----END PRIVATE KEY-----\n",
+    "client_email": "firebase-adminsdk-edbja@socialapp-d2a96.iam.gserviceaccount.com",
+    "client_id": "102810834323280414491",
     "auth_uri": "https://accounts.google.com/o/oauth2/auth",
     "token_uri": "https://oauth2.googleapis.com/token",
     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-lbcwf%40test-poc-fc935.iam.gserviceaccount.com"
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-edbja%40socialapp-d2a96.iam.gserviceaccount.com"
   },
   "firebaseConfig": {
-    "apiKey": "AIzaSyAkse57dRdRnuVGt6_Ujghf97oSnJIn4rc",
-    "authDomain": "test-poc-fc935.firebaseapp.com",
-    "databaseURL": "https://test-poc-fc935.firebaseio.com",
-    "projectId": "test-poc-fc935",
-    "storageBucket": "test-poc-fc935.appspot.com",
-    "messagingSenderId": "249625137306",
-    "appId": "1:249625137306:web:aa0b6ed5d02b6cc4"
+    "apiKey": "AIzaSyDzIN_z25g0AGiIAIW6L9VroS9bMDdU664",
+    "authDomain": "socialapp-d2a96.firebaseapp.com",
+    "databaseURL": "https://socialapp-d2a96.firebaseio.com",
+    "projectId": "socialapp-d2a96",
+    "storageBucket": "socialapp-d2a96.appspot.com",
+    "messagingSenderId": "734717806687",
+    "appId": "1:734717806687:web:c71d56630b3a6377"
   }
 }

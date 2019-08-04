@@ -27,5 +27,5 @@
   <plugin name="cordova-plugin-sms" spec="~1.0.5"/>
   <plugin name="cordova-plugin-contacts-phonenumbers" spec="~0.0.12"/>
   <plugin name="cordova-plugin-android-permissions" spec="^1.0.0"/>
-  <preference name="runtime" value="https://-.cloudfunctions.net/api"/>
+  <preference name="runtime" value="https://europe-west1-socialapp-d2a96.cloudfunctions.net/api"/>
 </widget>

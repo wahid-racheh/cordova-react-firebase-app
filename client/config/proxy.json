@@ -1,4 +1,4 @@
 {
-  "origin": "https://europe-west2-test-poc-fc935.cloudfunctions.net/api",
-  "local": "http://localhost:5000/test-poc-fc935/europe-west2/api"
+  "origin": "https://europe-west1-socialapp-d2a96.cloudfunctions.net/api",
+  "local": "http://localhost:5000/socialapp-d2a96/europe-west1/api"
 }
