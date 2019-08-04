@@ -65,6 +65,16 @@ const proxySettings = readJSONFileSync(
   path.resolve(__dirname, "./", "proxy.json")
 );
 
+function getOriginServer() {
+  let origin = proxySettings.origin;
+  const url = process.env.REACT_APP_ORIGIN_SERVER;
+  if (url) {
+    const index = url.indexOf("/api");
+    origin = index > -1 ? url.substring(0, index) : url;
+  }
+  return origin;
+}
+
 function getClientEnvironment(publicUrl) {
   const raw = Object.keys(process.env)
     .filter(key => REACT_APP.test(key))
@@ -84,8 +94,7 @@ function getClientEnvironment(publicUrl) {
         PUBLIC_URL: publicUrl,
 
         // APIs proxies
-        ORIGIN_SERVER:
-          process.env.REACT_APP_ORIGIN_SERVER || proxySettings.origin,
+        ORIGIN_SERVER: getOriginServer(),
         LOCAL_SERVER: proxySettings.local
       }
     );
