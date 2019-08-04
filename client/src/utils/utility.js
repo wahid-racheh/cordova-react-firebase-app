@@ -5,8 +5,9 @@ export const initials = str => {
 
 export const isSmart = () => {
   return (
-    document.URL.indexOf("http://") === -1 &&
-    document.URL.indexOf("https://") === -1 &&
-    window.cordova
+    !(
+      document.URL.indexOf("http://") > -1 ||
+      document.URL.indexOf("https://") > -1
+    ) && !!window.cordova
   );
 };

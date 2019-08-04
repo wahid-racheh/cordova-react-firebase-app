@@ -46,13 +46,15 @@ export const setAuthorization = store => {
 };
 
 export const setServerOrigin = origin => {
-  axios.interceptors.request.use(config => {
-    const { url } = config;
-    return {
-      ...config,
-      url: origin + url
-    };
-  });
+  if (origin) {
+    axios.interceptors.request.use(config => {
+      const { url } = config;
+      return {
+        ...config,
+        url: origin + url
+      };
+    });
+  }
 };
 
 export const setServerRuntime = (resolve, reject) => {
