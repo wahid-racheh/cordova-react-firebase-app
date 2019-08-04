@@ -15,10 +15,7 @@ readXmlFile(
     const preference = {
       $: {
         name: "runtime",
-        value:
-          process.env.REACT_APP_ORIGIN_SERVER ||
-          process.env.ORIGIN_SERVER ||
-          proxy.origin
+        value: process.env.REACT_APP_ORIGIN_SERVER || proxy.origin
       }
     };
     if (!json.widget.preference || !(json.widget.preference instanceof Array)) {
