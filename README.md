@@ -90,6 +90,7 @@ commands you ran (even if it's a lot).
      - `https://console.firebase.google.com/project/`[project_id](#project_id)`/database/firestore/indexes?create_composite=Cldwcm9qZWN0cy9jb3Jkb3ZhLXJlYWN0LWZpcmViYXNlL2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9jb21tZW50cy9pbmRleGVzL18QARoOCgp1c2VySGFuZGxlEAEaDQoJY3JlYXRlZEF0EAIaDAoIX19uYW1lX18QAg`
      - `https://console.firebase.google.com/project/`[project_id](#project_id)`/database/firestore/indexes?create_composite=ClZwcm9qZWN0cy9jb3Jkb3ZhLXJlYWN0LWZpcmViYXNlL2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9zY3JlYW1zL2luZGV4ZXMvXxABGg4KCnVzZXJIYW5kbGUQARoNCgljcmVhdGVkQXQQAhoMCghfX25hbWVfXxAC`
      - `https://console.firebase.google.com/project/`[project_id](#project_id)`/database/firestore/indexes?create_composite=Cldwcm9qZWN0cy9jb3Jkb3ZhLXJlYWN0LWZpcmViYXNlL2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9jb21tZW50cy9pbmRleGVzL18QARoMCghzY3JlYW1JZBABGg0KCWNyZWF0ZWRBdBACGgwKCF9fbmFtZV9fEAI`
+     - `https://console.firebase.google.com/project/`[project_id](#project_id)`/database/firestore/indexes?create_composite=ClBwcm9qZWN0cy9zb2NpYWxhcHAtZDJhOTYvZGF0YWJhc2VzLyhkZWZhdWx0KS9jb2xsZWN0aW9uR3JvdXBzL2NvbnRhY3RzL2luZGV4ZXMvXxABGg4KCnVzZXJIYW5kbGUQARoPCgtkaXNwbGF5TmFtZRABGgwKCF9fbmFtZV9fEAE`
 
 - Setup storage
 
