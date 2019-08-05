@@ -21,7 +21,11 @@ import SyncIcon from "@material-ui/icons/Sync";
 
 import { connect } from "react-redux";
 import { setAddAction } from "../redux/actions/ui.actions";
-import { getContacts } from "../redux/actions/contact.actions";
+import {
+  getContacts,
+  syncContacts,
+  stopSync
+} from "../redux/actions/contact.actions";
 
 const styles = theme => {
   return {
@@ -34,6 +38,10 @@ const styles = theme => {
     pageTitle: {
       textAlign: "center",
       padding: "1rem"
+    },
+    animateSyncBtn: {
+      animation: "loader 0.6s linear",
+      animationIterationCount: "infinite"
     }
   };
 };
@@ -47,22 +55,42 @@ class Contact extends Component {
   render() {
     const {
       classes,
-      data: { contacts: contactList, loading }
+      data: { contacts, loading, isSyncingItems },
+      syncContacts,
+      stopSync
     } = this.props;
     return (
-      <ContactProvider contacts={contactList} enableSelection={true}>
+      <ContactProvider
+        {...{
+          contacts,
+          enableSelection: true,
+          syncContacts,
+          stopSync,
+          isSyncingItems
+        }}
+      >
         <ContactConsumer>
           {props => {
-            const { contacts, selectAll, handleSelectAll } = props;
+            const {
+              allContacts,
+              allIds,
+              selectAll,
+              handleSelectAll,
+              handleSynchronize
+            } = props;
+
+            const btnSyncClassName = isSyncingItems
+              ? classes.animateSyncBtn
+              : null;
             return (
               <Fragment>
-                {!loading && !contacts.length ? (
+                {!loading && !allContacts.length ? (
                   <Typography variant="h4" className={classes.pageTitle}>
                     No contact found !
                   </Typography>
                 ) : (
                   <Fragment>
-                    {!loading && (
+                    {!loading && !!allIds.length && (
                       <div className={classes.sync}>
                         <FormGroup>
                           <FormControlLabel
@@ -76,12 +104,18 @@ class Contact extends Component {
                             label="Select All"
                           />
                         </FormGroup>
-                        <MyButton tip="Sync">
-                          <SyncIcon color="primary" />
+                        <MyButton
+                          tip="Sync"
+                          onClick={handleSynchronize}
+                          btnClassName={btnSyncClassName}
+                        >
+                          <SyncIcon
+                            color={!isSyncingItems ? "primary" : "secondary"}
+                          />
                         </MyButton>
                       </div>
                     )}
-                    <ContactList {...props} />;
+                    <ContactList {...props} />
                   </Fragment>
                 )}
               </Fragment>
@@ -97,13 +131,15 @@ Contact.propTypes = {
   classes: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
   setAddAction: PropTypes.func.isRequired,
-  getContacts: PropTypes.func.isRequired
+  getContacts: PropTypes.func.isRequired,
+  syncContacts: PropTypes.func.isRequired,
+  stopSync: PropTypes.func.isRequired
 };
 
 const enhance = compose(
   connect(
     state => ({ data: state.contact }),
-    { setAddAction, getContacts }
+    { setAddAction, getContacts, syncContacts, stopSync }
   ),
   withStyles(styles)
 );

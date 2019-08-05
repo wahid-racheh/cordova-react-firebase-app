@@ -3,12 +3,14 @@ import React, { Component } from "react";
 const ContactContext = React.createContext();
 
 class ContactProvider extends Component {
+  subscription;
   state = {
-    contacts: [],
-    selectAll: true,
+    allContacts: [],
+    selectAll: false,
     checkedItems: [],
     allIds: [],
-    enableSelection: false
+    enableSelection: false,
+    isSyncingItems: false
   };
 
   componentDidMount() {
@@ -19,44 +21,41 @@ class ContactProvider extends Component {
     this.setInternalState(nextProps);
   }
 
-  setInternalState = ({ contacts, enableSelection }) => {
-    if (contacts) {
-      let contactList = [];
-      contacts.forEach(item => {
-        const c = { ...item };
-        contactList = [...contactList, c];
-      });
-
-      const allIds = contactList.map(contact => contact.id);
-      this.setState(() => {
-        return {
-          enableSelection,
-          contacts: contactList,
-          selectAll: enableSelection,
-          allIds,
-          checkedItems: enableSelection ? allIds : []
-        };
-      });
-    }
+  setInternalState = ({ contacts, enableSelection, isSyncingItems }) => {
+    let allIds = [];
+    contacts.forEach(c => {
+      if (!c.isDuplicated) allIds.push(c.phoneNumberId);
+    });
+    this.setState(() => {
+      return {
+        enableSelection,
+        allContacts: contacts,
+        allIds,
+        isSyncingItems
+      };
+    });
   };
 
-  handleSelectItem = value => () => {
-    if (this.state.enableSelection) {
-      const { checkedItems, contacts } = this.state;
-      const currentIndex = checkedItems.indexOf(value);
+  handleSelectItem = ({ phoneNumberId, isDuplicated, isSyncing }) => () => {
+    const { isSyncingItems, enableSelection } = this.state;
+
+    if (!isSyncingItems && enableSelection && !isDuplicated && !isSyncing) {
+      const { checkedItems, allIds } = this.state;
+      const currentIndex = checkedItems.indexOf(phoneNumberId);
       const array = [...checkedItems];
       if (currentIndex === -1) {
-        array.push(value);
+        array.push(phoneNumberId);
       } else {
         array.splice(currentIndex, 1);
       }
-      this.setSelectAll(array.length === contacts.length);
+      this.setSelectAll(array.length === allIds.length);
       this.updateCheckedList(array);
     }
   };
 
   handleSelectAll = event => {
-    if (this.state.enableSelection) {
+    const { isSyncingItems, enableSelection } = this.state;
+    if (!isSyncingItems && enableSelection) {
       const {
         target: { checked }
       } = event;
@@ -79,7 +78,33 @@ class ContactProvider extends Component {
 
   updateCheckedList = array => {
     this.setState({ checkedItems: [...array] });
-    console.log("list : ", array);
+  };
+
+  unsubscribe = () => {
+    this.props.stopSync();
+    this.subscription && this.subscription.unsubscribe();
+  };
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  handleSynchronize = () => {
+    const { checkedItems, allContacts, isSyncingItems } = this.state;
+    let array = [];
+    checkedItems.forEach(phoneNumberId => {
+      const item = allContacts.find(
+        c => c.phoneNumberId === phoneNumberId && c.shouldBeSynced
+      );
+      if (item) {
+        array.push({ ...item });
+      }
+    });
+    if (isSyncingItems) {
+      this.unsubscribe();
+    } else if (!!array.length) {
+      this.subscription = this.props.syncContacts(array);
+    }
   };
 
   render() {
@@ -90,7 +115,8 @@ class ContactProvider extends Component {
           setSelectAll: this.setSelectAll,
           setChecked: this.setChecked,
           handleSelectAll: this.handleSelectAll,
-          handleSelectItem: this.handleSelectItem
+          handleSelectItem: this.handleSelectItem,
+          handleSynchronize: this.handleSynchronize
         }}
       >
         {this.props.children}
@@ -100,4 +126,5 @@ class ContactProvider extends Component {
 }
 
 const ContactConsumer = ContactContext.Consumer;
+
 export { ContactProvider, ContactConsumer };

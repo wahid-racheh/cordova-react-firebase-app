@@ -7,7 +7,7 @@ import themeFile from "./utils/theme";
 // Redux
 import { Provider } from "react-redux";
 import store from "./redux/store";
-import { setAuthorization } from "./utils/helpers";
+import { setAuthorization, checkSession } from "./utils/helpers";
 
 // For creating a material theme
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
@@ -25,6 +25,8 @@ import Contact from "./pages/contact";
 
 const theme = createMuiTheme(themeFile);
 
+checkSession(store);
+
 class App extends Component {
   componentDidMount() {
     setAuthorization(store);
@@ -40,7 +42,7 @@ class App extends Component {
               <Switch>
                 <AuthRoute path="/login" component={Login} />
                 <AuthRoute path="/signup" component={Signup} />
-                <AuthRoute path="/contacts" component={Contact} />
+                <AuthRoute path="/contact" component={Contact} />
                 {/* exact does'nt work in cordova application <Route exact={true}  path="/" component={Home} /> */}
                 <Route path="/" component={Home} />
               </Switch>

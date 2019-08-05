@@ -4,31 +4,31 @@ import { handleResponse, handleFailure } from "../utils/helpers";
 const ScreamApi = {
   getScreams() {
     return axios
-      .get("/scream")
+      .get(`${process.env.API_PREFIX}/scream`)
       .then(handleResponse)
       .catch(handleFailure);
   },
   postScream(newScream) {
     return axios
-      .post("/scream", newScream)
+      .post(`${process.env.API_PREFIX}/scream`, newScream)
       .then(handleResponse)
       .catch(handleFailure);
   },
   likeScream(screamId) {
     return axios
-      .get(`/scream/${screamId}/like`)
+      .get(`${process.env.API_PREFIX}/scream/${screamId}/like`)
       .then(handleResponse)
       .catch(handleFailure);
   },
   unlikeScream(screamId) {
     return axios
-      .get(`/scream/${screamId}/unlike`)
+      .get(`${process.env.API_PREFIX}/scream/${screamId}/unlike`)
       .then(handleResponse)
       .catch(handleFailure);
   },
   deleteScream(screamId) {
     return axios
-      .delete(`/scream/${screamId}`)
+      .delete(`${process.env.API_PREFIX}/scream/${screamId}`)
       .then(handleResponse)
       .catch(handleFailure);
   }

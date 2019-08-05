@@ -30,10 +30,10 @@ const styles = theme => ({
     marginBottom: 20,
     position: "relative"
   },
-  actionArea: {
+  cardActionArea: {
     display: "flex",
     justifyContent: "space-between",
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up("md")]: {
       maxHeight: "12rem"
     },
     [theme.breakpoints.down("sm")]: {
@@ -42,7 +42,7 @@ const styles = theme => ({
   },
   image: {
     minWidth: "40%",
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up("md")]: {
       maxWidth: "12rem"
     },
     [theme.breakpoints.down("sm")]: {
@@ -114,7 +114,7 @@ class Scream extends Component {
       ) : null;
     return (
       <Card className={classes.card}>
-        <CardActionArea component="div" className={classes.actionArea}>
+        <CardActionArea component="div" className={classes.cardActionArea}>
           <CardMedia
             component="img"
             alt="user image"

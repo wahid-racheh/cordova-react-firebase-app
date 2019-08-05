@@ -60,6 +60,7 @@ readJSONFile(proxyFileName, () => {
 readJSONFile(configFileName, () => {
   writeJSONFile(configFileName, {
     region: "",
+    apiPrefix: "/api",
     whitelist: [],
     privateCertificate: {
       type: "",

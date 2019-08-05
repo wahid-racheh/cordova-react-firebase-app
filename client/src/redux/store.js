@@ -7,6 +7,7 @@ import uiReducer from "./reducers/ui.reducer";
 import contactReducer from "./reducers/contact.reducer";
 
 import api from "../api";
+import mocks from "../mocks";
 
 const initialState = {};
 
@@ -17,9 +18,7 @@ const logger = (/*store*/) => next => action => {
   return next(action);
 };
 
-const whatever = {};
-
-const middleWare = [logger, thunk.withExtraArgument({ api, whatever })];
+const middleWare = [logger, thunk.withExtraArgument({ api, mocks })];
 
 const reducers = combineReducers({
   user: userReducer,
