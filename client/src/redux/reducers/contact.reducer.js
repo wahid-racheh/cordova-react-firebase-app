@@ -8,11 +8,12 @@ import {
   STOP_SYNC
 } from "../types";
 
-import { mergeContacts } from "../../utils/helpers";
-import { sortArray } from "../../utils/utility";
+import { mergeContacts, generateContactId } from "../../helpers";
+import { sortArray, compactArray, isEmpty } from "../../utils/utility";
 
 const initialState = {
   contacts: [],
+  nativeContacts: [],
   itemsToSync: [],
   isMounted: false,
   loading: false,
@@ -29,15 +30,25 @@ export default function(state = initialState, action) {
         loading: false
       };
     case MERGE_CONTACTS:
+      const nativeList = compactArray(action.payload).reduce((acc, item) => {
+        const temp = {
+          ...item,
+          nativeId: generateContactId(item)
+        };
+        return !isEmpty(temp) ? [...acc, temp] : [...acc];
+      }, []);
+
+      const contacts = mergeContacts("nativeId", state.contacts, nativeList, [
+        c => !c.shouldBeSynced,
+        c => !c.shouldBeAddedToDevice,
+        "displayName",
+        "nickname"
+      ]);
+
       return {
         ...state,
-        contacts: [
-          ...mergeContacts("phoneNumberId", state.contacts, action.payload, [
-            c => !c.shouldBeSynced,
-            c => !c.shouldBeAddedToDevice,
-            "displayName"
-          ])
-        ]
+        nativeContacts: [...action.payload],
+        contacts
       };
     case LOADING_CONTACTS:
       return {
@@ -70,7 +81,7 @@ export default function(state = initialState, action) {
         isSyncingItems: true,
         contacts: [
           ...state.contacts.map(c => {
-            if (c.phoneNumberId === action.payload.phoneNumberId) {
+            if (c.nativeId === action.payload.nativeId) {
               c = { ...c, isSyncing: true };
             }
             return c;
@@ -85,18 +96,28 @@ export default function(state = initialState, action) {
         contacts: sortArray(
           [
             ...state.contacts.map(c => {
-              if (c.phoneNumberId === action.payload.phoneNumberId) {
+              if (c.nativeId === action.payload.nativeId) {
                 c = {
                   ...c,
                   isSyncing: false,
-                  shouldBeSynced: !action.payload.isSuccessfull,
+                  shouldBeSynced: c.shouldBeSynced
+                    ? !action.payload.isSuccessfull
+                    : c.shouldBeSynced,
+                  shouldBeAddedToDevice: c.shouldBeAddedToDevice
+                    ? !action.payload.isSuccessfull
+                    : c.shouldBeAddedToDevice,
                   isDuplicated: action.payload.isSuccessfull
                 };
               }
               return c;
             })
           ],
-          [c => !c.shouldBeSynced, c => !c.shouldBeAddedToDevice, "displayName"]
+          [
+            c => !c.shouldBeSynced,
+            c => !c.shouldBeAddedToDevice,
+            "displayName",
+            "nickname"
+          ]
         ),
         isSyncingItems,
         syncedItemsCount: isSyncingItems ? syncedItemsCount : 0

@@ -1,5 +1,11 @@
 import { isEqual, sortBy } from "lodash";
 
+export const isEmpty = obj => {
+  return (
+    obj === null || obj === undefined || obj === "" || obj === [] || obj === {}
+  );
+};
+
 export const initials = str => {
   const initials = str.match(/\b\w/g) || [];
   return ((initials.shift() || "") + (initials.pop() || "")).toUpperCase();
@@ -10,30 +16,24 @@ export const isSmart = () => {
     !(
       document.URL.indexOf("http://") > -1 ||
       document.URL.indexOf("https://") > -1
-    ) && !!window.cordova
+    ) && !isEmpty(window.cordova)
   );
 };
 
-export const mergeArrays = (idKey, objectKeyInstance, ...arrs) => {
-  function getObjectInstance(obj) {
-    if (!objectKeyInstance) {
-      return { ...obj };
+export const mergeUniqueItems = (...arrays) => {
+  let jointArray = [];
+  arrays.forEach(array => {
+    if (!isEmpty(array)) {
+      jointArray = [...jointArray, ...array];
     }
-    const newInstance = {};
-    Object.keys(objectKeyInstance).forEach(key => {
-      newInstance[key] = obj[key] || "";
-    });
-    return newInstance;
-  }
+  });
+  return Array.from(new Set([...jointArray]));
+};
+
+export const mergeArrays = (idKey, ...arrs) => {
   return [].concat(...arrs).reduce((acc, item) => {
-    const arr = acc.filter(c => {
-      const hasSameId = item[idKey] === c[idKey];
-      if (hasSameId) {
-        const c1 = getObjectInstance(item);
-        const c2 = getObjectInstance(c);
-        c.isDuplicated = isEqual(c1, c2);
-      }
-      return hasSameId;
+    const arr = acc.filter(e => {
+      return item[idKey] === e[idKey] || item["id"] === e["id"];
     });
     return !arr.length ? [...acc, item] : acc;
   }, []);
@@ -49,8 +49,26 @@ export const chunkInefficient = (array, chunkSize) => {
 };
 
 export const sortArray = (array, sortCriteria) => {
-  if (sortCriteria) {
+  if (!isEmpty(sortCriteria)) {
     return sortBy(array, sortCriteria);
   }
   return array;
+};
+
+export const compactObject = obj => {
+  const data = !isEmpty(obj) ? obj : {};
+  return Object.entries(data).reduce((newObject, [key, value]) => {
+    if (!isEmpty(value)) {
+      newObject[key] = value;
+    }
+    return newObject;
+  }, {});
+};
+
+export const compactArray = array => {
+  const data = !isEmpty(array) ? array : [];
+  return data.reduce((newArray, item) => {
+    const newItem = compactObject(item);
+    return !isEmpty(newItem) ? [...newArray, newItem] : [...newArray];
+  }, []);
 };

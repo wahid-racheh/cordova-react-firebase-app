@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const FBAuth = require("../utils/fbAuth");
+const { fbAuth } = require("../helpers/http");
 
 const router = Router();
 
@@ -10,8 +10,8 @@ const {
 } = require("../handlers/contact");
 
 // Contact routes
-router.get("/", FBAuth, getAllContacts);
-router.post("/", FBAuth, syncContact);
-router.get("/delete", FBAuth, deleteContactsByUserHandle);
+router.get("/", fbAuth, getAllContacts);
+router.post("/", fbAuth, syncContact);
+router.get("/delete", fbAuth, deleteContactsByUserHandle);
 
 module.exports = router;

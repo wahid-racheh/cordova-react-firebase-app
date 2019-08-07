@@ -18,8 +18,8 @@ module.exports = function(app) {
   app.use(proxy(`${proxySettings.prefix}/scream`, proxyConfig));
   app.use(
     proxy(`${proxySettings.prefix}/contact`, {
-      ...proxyConfig,
-      target: proxySettings.origin
+      ...proxyConfig
+      //target: proxySettings.origin
     })
   );
 

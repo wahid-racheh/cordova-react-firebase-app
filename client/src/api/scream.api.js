@@ -1,5 +1,5 @@
 import axios from "axios";
-import { handleResponse, handleFailure } from "../utils/helpers";
+import { handleResponse, handleFailure } from "../helpers";
 
 const ScreamApi = {
   getScreams() {

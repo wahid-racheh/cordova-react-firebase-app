@@ -1,6 +1,6 @@
 const functions = require("firebase-functions");
-const { db } = require("../utils/admin");
-const { config } = require("../utils/helpers");
+const { db } = require("../helpers/admin");
+const { config } = require("../helpers/config");
 
 const onLike = functions
   .region(config.region)

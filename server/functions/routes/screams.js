@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const FBAuth = require("../utils/fbAuth");
+const { fbAuth } = require("../helpers/http");
 
 const router = Router();
 
@@ -15,11 +15,11 @@ const {
 
 // Scream routes
 router.get("/", getAllScreams);
-router.post("/", FBAuth, postOneScream);
+router.post("/", fbAuth, postOneScream);
 router.get("/:screamId", getScreamById);
-router.delete("/:screamId", FBAuth, deleteScream);
-router.get("/:screamId/like", FBAuth, likeScream);
-router.get("/:screamId/unlike", FBAuth, unlikeScream);
-router.post("/:screamId/comment", FBAuth, commentOnScream);
+router.delete("/:screamId", fbAuth, deleteScream);
+router.get("/:screamId/like", fbAuth, likeScream);
+router.get("/:screamId/unlike", fbAuth, unlikeScream);
+router.post("/:screamId/comment", fbAuth, commentOnScream);
 
 module.exports = router;

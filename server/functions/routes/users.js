@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const FBAuth = require("../utils/fbAuth");
+const { fbAuth } = require("../helpers/http");
 
 const router = Router();
 
@@ -11,9 +11,9 @@ const {
 } = require("../handlers/users");
 
 // Users routes
-router.post("/", FBAuth, addUserDetails);
-router.get("/", FBAuth, getAuthenticatedUser);
-router.get("/:handle", FBAuth, getUserDetails);
-router.post("/notifications", FBAuth, markNotificationRead);
+router.post("/", fbAuth, addUserDetails);
+router.get("/", fbAuth, getAuthenticatedUser);
+router.get("/:handle", fbAuth, getUserDetails);
+router.post("/notifications", fbAuth, markNotificationRead);
 
 module.exports = router;

@@ -7,7 +7,7 @@ import {
   SET_ADD_ACTION
 } from "../types";
 
-import { ADD_SCREAM } from "../../utils/constants";
+import { ADD_SCREAM } from "../../constants";
 
 const initialState = {
   loading: false,

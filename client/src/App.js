@@ -7,25 +7,24 @@ import themeFile from "./utils/theme";
 // Redux
 import { Provider } from "react-redux";
 import store from "./redux/store";
-import { setAuthorization, checkSession } from "./utils/helpers";
+
+import { setAuthorization } from "./helpers";
 
 // For creating a material theme
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 
 // Components
-import Navbar from "./components/Navbar";
-import AuthRoute from "./utils/AuthRoute";
+import Navbar from "./shared/components/Navbar";
+import AuthRoute from "./shared/components/AuthRoute";
 
 // Pages
-import Home from "./pages/home";
-import Login from "./pages/login";
-import Signup from "./pages/signup";
-import Contact from "./pages/contact";
+import Home from "./modules/dashboard/containers/home";
+import Login from "./modules/auth/containers/login";
+import Signup from "./modules/auth/containers/signup";
+import Contact from "./modules/contact/containers/contact";
 
 const theme = createMuiTheme(themeFile);
-
-checkSession(store);
 
 class App extends Component {
   componentDidMount() {

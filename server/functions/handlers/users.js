@@ -1,7 +1,7 @@
-const { db } = require("../utils/admin");
-const { upload } = require("../utils/upload");
-const { reduceUserDetails } = require("../utils/validators");
-const { respondSuccess, respondFailure } = require("../utils/helpers");
+const { db } = require("../helpers/admin");
+const { upload } = require("../helpers/upload");
+const { reduceUserDetails } = require("../helpers/validators");
+const { respondSuccess, respondFailure } = require("../helpers/http");
 
 const ALLOWED_IMAGE_EXTENSIONS = ["jpeg", "jpg", "png"];
 

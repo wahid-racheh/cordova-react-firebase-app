@@ -12,17 +12,12 @@ import {
 
 export const getScreams = () => (dispatch, getState, { api }) => {
   dispatch({ type: LOADING_SCREAMS });
-  // const {
-  //   UI: { isMounted }
-  // } = getState();
   api.ScreamApi.getScreams()
     .then(data => {
-      // if (isMounted) {
       dispatch({
         type: SET_SCREAMS,
         payload: data
       });
-      // }
     })
     .catch(() => {
       dispatch({

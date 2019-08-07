@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { isSmart } from "./utils/utility";
 import * as serviceWorker from "./serviceWorker";
-import { setServerRuntime, setServerOrigin } from "./utils/helpers";
+import { setServerRuntime, setServerOrigin } from "./helpers";
 
 process.env.NODE_ENV === "production" &&
   setServerOrigin(process.env.REACT_APP_ORIGIN_SERVER);

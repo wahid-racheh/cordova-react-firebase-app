@@ -1,11 +1,11 @@
-const { db } = require("../utils/admin");
-const { respondSuccess, respondFailure } = require("../utils/helpers");
+const { db } = require("../helpers/admin");
+const { respondSuccess, respondFailure } = require("../helpers/http");
+const { compactObject } = require("../utils/utility");
 
 // Get all contacts
 exports.getAllContacts = (req, res) => {
   console.log("getAllContacts");
   db.collection("contacts")
-    .orderBy("displayName", "asc")
     .where("userHandle", "==", req.user.handle)
     .get()
     .then(contacts => {
@@ -26,50 +26,90 @@ exports.syncContact = (req, res) => {
   const {
     user: { handle },
     body: {
-      phoneNumbers,
-      thumbnail,
-      lastName,
+      contactId,
+      id,
+      addresses,
+      birthday,
+      categories,
+      country,
+      department,
       displayName,
-      firstName,
-      phoneNumberId
+      emails,
+      familyName,
+      formatted,
+      givenName,
+      honorificPrefix,
+      honorificSuffix,
+      nativeId,
+      ims,
+      locality,
+      middleName,
+      name,
+      nickname,
+      note,
+      organizations,
+      phoneNumbers,
+      photos,
+      postalCode,
+      region,
+      streetAddress,
+      title,
+      urls
     }
   } = req;
 
-  let newContact = {
-    createdAt: new Date().toISOString(),
-    userHandle: handle,
-    displayName: displayName || "",
-    firstName: firstName || "",
-    phoneNumberId: phoneNumberId || "",
-    lastName: lastName || "",
-    thumbnail: thumbnail || "",
-    phoneNumbers: []
-  };
-  if (phoneNumbers) {
-    phoneNumbers.forEach(({ number, normalizedNumber, type }) => {
-      newContact.phoneNumbers.push({
-        number: number || "",
-        normalizedNumber: normalizedNumber || "",
-        type: type || ""
-      });
-    });
-  }
-  db.collection("contacts")
-    .where("userHandle", "==", handle)
-    .where("phoneNumberId", "==", phoneNumberId)
-    .limit(1)
-    .get()
-    .then(data => {
-      if (data.empty) {
+  const newContact = compactObject({
+    id,
+    addresses,
+    birthday,
+    categories,
+    country,
+    department,
+    displayName,
+    emails,
+    familyName,
+    formatted,
+    givenName,
+    honorificPrefix,
+    honorificSuffix,
+    nativeId,
+    ims,
+    locality,
+    middleName,
+    name,
+    nickname,
+    note,
+    organizations,
+    phoneNumbers,
+    photos,
+    postalCode,
+    region,
+    streetAddress,
+    title,
+    urls,
+    userHandle: handle
+  });
+
+  let response;
+  if (!contactId) {
+    newContact.createdAt = new Date().toISOString();
+    response = db.collection("contacts").add(newContact);
+  } else {
+    response = db
+      .doc(`/contacts/${contactId}`)
+      .get()
+      .then(doc => {
+        if (!doc.exists) {
+          return respondFailure(res, { error: "Contact not found" }, 404);
+        }
+        newContact.createdAt = new Date().toISOString();
         return db.collection("contacts").add(newContact);
-      } else {
-        let batch = db.batch();
-        data.forEach(doc => {
-          batch.update(doc.ref, newContact);
-        });
-        return batch.commit();
-      }
-    })
+        // let batch = db.batch();
+        // batch.update(doc.ref, newContact);
+        // return batch.commit();
+      });
+  }
+  response
     .then(doc => {
       let resContact = newContact;
       resContact.contactId = doc.id;

@@ -1,5 +1,6 @@
 import { from, Observable } from "rxjs";
 import { concatMap } from "rxjs/operators";
+import { compactObject } from "../../utils/utility";
 
 import {
   SET_CONTACTS,
@@ -14,43 +15,25 @@ import {
 
 const syncSubscriptions = [];
 
-export const getNativeContacts = () => (dispatch, getState, { mocks }) => {
-  function parseNativeContacts(array) {
-    return array
-      ? array.map(c => {
-          const item = { ...c, phoneNumberId: c.id, contactId: c.id };
-          delete item.id;
-          return item;
-        })
-      : [];
-  }
-  if (window.cordova) {
-    navigator.contactsPhoneNumbers.list(
-      data => {
-        dispatch({
-          type: MERGE_CONTACTS,
-          payload: parseNativeContacts(data)
-        });
-      },
-      error => {
-        console.error(error);
-        dispatch({
-          type: MERGE_CONTACTS,
-          payload: []
-        });
-      }
-    );
-  } else {
-    dispatch({
-      type: MERGE_CONTACTS,
-      payload: parseNativeContacts(mocks.contacts.nativeContactList)
+export const getNativeContacts = () => (dispatch, getState, { api, mocks }) => {
+  api.ContactApi.getNativeContacts()
+    .then(data => {
+      console.log("data : ", JSON.stringify(data));
+      dispatch({
+        type: MERGE_CONTACTS,
+        payload: data
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: MERGE_CONTACTS,
+        payload: mocks.contacts.nativeContactList
+      });
     });
-  }
 };
 
 export const getContacts = () => (dispatch, getState, { api }) => {
   dispatch({ type: LOADING_CONTACTS });
-
   api.ContactApi.getContacts()
     .then(data => {
       dispatch({
@@ -59,7 +42,7 @@ export const getContacts = () => (dispatch, getState, { api }) => {
       });
       dispatch(getNativeContacts());
     })
-    .catch(() => {
+    .catch(error => {
       dispatch({
         type: SET_CONTACTS,
         payload: []
@@ -68,62 +51,78 @@ export const getContacts = () => (dispatch, getState, { api }) => {
     });
 };
 
-const doSyncContact = (contact, api) => {
-  const {
-    displayName,
-    firstName,
-    phoneNumberId,
-    lastName,
-    thumbnail,
-    phoneNumbers
-  } = contact;
-
-  return new Observable(observer => {
-    observer.next({
-      [START_SYNC_ITEM]: {
-        type: START_SYNC_ITEM,
-        payload: {
-          phoneNumberId: contact.phoneNumberId
-        }
+const getSyncStartPayload = element => {
+  return {
+    [START_SYNC_ITEM]: {
+      type: START_SYNC_ITEM,
+      payload: {
+        ...element
       }
-    });
-    api.ContactApi.syncContact({
-      displayName,
-      firstName,
-      phoneNumberId,
-      lastName,
-      thumbnail,
-      phoneNumbers
-    })
-      .then(data => {
-        observer.next({
-          [END_SYNC_ITEM]: {
-            type: END_SYNC_ITEM,
-            payload: {
-              phoneNumberId: contact.phoneNumberId,
-              isSuccessfull: true
-            }
-          }
+    }
+  };
+};
+
+const getSyncSuccessPayload = element => {
+  return {
+    [END_SYNC_ITEM]: {
+      type: END_SYNC_ITEM,
+      payload: {
+        ...element,
+        isSuccessfull: true
+      }
+    }
+  };
+};
+
+const getSyncFailerPayload = (element, error) => {
+  console.log("error : ", error);
+  return {
+    [END_SYNC_ITEM]: {
+      type: END_SYNC_ITEM,
+      payload: {
+        ...element,
+        isSuccessfull: false
+      }
+    },
+    [SET_ERRORS]: {
+      type: SET_ERRORS,
+      payload: error
+    }
+  };
+};
+
+const doSyncContact = (contact, api) => {
+  const element = compactObject(contact);
+  return new Observable(observer => {
+    observer.next(getSyncStartPayload(element));
+    if (element.shouldBeSynced) {
+      api.ContactApi.syncContact(element)
+        .then(() => {
+          observer.next(getSyncSuccessPayload(element));
+          observer.complete();
+        })
+        .catch(error => {
+          observer.next(getSyncFailerPayload(element, error));
+          observer.complete();
         });
-        observer.complete();
-      })
-      .catch(error => {
-        console.log("error : ", error);
-        observer.next({
-          [END_SYNC_ITEM]: {
-            type: END_SYNC_ITEM,
-            payload: {
-              phoneNumberId: contact.phoneNumberId,
-              isSuccessfull: false
-            }
-          },
-          [SET_ERRORS]: {
-            type: SET_ERRORS,
-            payload: error
-          }
+    } else if (element.shouldBeAddedToDevice) {
+      api.ContactApi.saveContactToDevice(element)
+        .then(() => {
+          observer.next(getSyncSuccessPayload(element));
+          observer.complete();
+        })
+        .catch(error => {
+          observer.next(getSyncFailerPayload(element, error));
+          observer.complete();
         });
-        observer.complete();
-      });
+    } else {
+      observer.next(
+        getSyncFailerPayload(element, {
+          error: "Something went wrong while syncing the contact"
+        })
+      );
+      observer.complete();
+    }
   });
 };
 

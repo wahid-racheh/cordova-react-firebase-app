@@ -1,5 +1,5 @@
-const { db } = require("../utils/admin");
-const { respondSuccess, respondFailure } = require("../utils/helpers");
+const { db } = require("../helpers/admin");
+const { respondSuccess, respondFailure } = require("../helpers/http");
 
 // Get all screams
 exports.getAllScreams = (req, res) => {
