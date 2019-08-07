@@ -19,7 +19,7 @@ import CloseIcon from "@material-ui/icons/Close";
 
 // Reducx stuff
 import { connect } from "react-redux";
-import { postContact } from "../redux/actions/contact.actions";
+import { syncContact } from "../redux/actions/contact.actions";
 
 const styles = theme => ({
   ...theme,
@@ -74,7 +74,7 @@ class PostContact extends Component {
   };
   handleSubmit = event => {
     event.preventDefault();
-    this.props.postContact({ body: this.state.body });
+    this.props.syncContact({ body: this.state.body });
   };
   render() {
     const { errors } = this.state;
@@ -173,12 +173,12 @@ class PostContact extends Component {
 }
 
 PostContact.propTypes = {
-  postContact: PropTypes.func.isRequired,
+  syncContact: PropTypes.func.isRequired,
   UI: PropTypes.object.isRequired
 };
 
 const mapActionsToprops = {
-  postContact
+  syncContact
 };
 
 const mapStateToProps = state => ({

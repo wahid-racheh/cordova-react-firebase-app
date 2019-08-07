@@ -14,6 +14,12 @@ const getError = error => {
   } else if (error.code === "auth/wrong-password") {
     data.status = 403;
     data.general = "Wrong credentials, please try again";
+  } else if (error.code === "auth/id-token-expired") {
+    data.status = 403;
+    data.general = "Your session has expired.";
+  } else if (error.code === "auth/wrong-password") {
+    data.status = 403;
+    data.general = "Wrong credentials, please try again";
   } else if (error.code === "auth/weak-password") {
     data.status = 403;
     data.password = "Password should contains at least 6 characters";

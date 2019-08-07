@@ -77,3 +77,31 @@ exports.syncContact = (req, res) => {
     })
     .catch(err => respondFailure(res, err));
 };
+
+exports.deleteContactsByUserHandle = (req, res) => {
+  console.log("deleteContactsByUserHandle");
+  db.doc(`/users/${req.user.handle}`)
+    .get()
+    .then(doc => {
+      if (!doc.exists) {
+        return respondFailure(res, { error: "User not found" }, 404);
+      }
+      return db
+        .collection("contacts")
+        .where("userHandle", "==", req.user.handle)
+        .get();
+    })
+    .then(data => {
+      let batch = db.batch();
+      data.forEach(doc => {
+        batch.delete(doc.ref);
+      });
+      return batch.commit();
+    })
+    .then(() => {
+      return respondSuccess(res, {
+        message: `${req.user.handle} contacts are deleted successfully`
+      });
+    })
+    .catch(err => respondFailure(res, err));
+};

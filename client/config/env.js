@@ -65,11 +65,6 @@ const proxySettings = readJSONFileSync(
   path.resolve(__dirname, "./", "proxy.json")
 );
 
-function getOrigin(url) {
-  const index = url.indexOf("/api");
-  return index > -1 ? url.substring(0, index) : url;
-}
-
 function getClientEnvironment(publicUrl) {
   const raw = Object.keys(process.env)
     .filter(key => REACT_APP.test(key))
@@ -88,9 +83,9 @@ function getClientEnvironment(publicUrl) {
         // images into the `src` and `import` them in code to get their paths.
         PUBLIC_URL: publicUrl,
 
-        ORIGIN_SERVER: getOrigin(
-          process.env.REACT_APP_ORIGIN_SERVER || proxySettings.origin
-        )
+        ORIGIN_SERVER:
+          process.env.REACT_APP_ORIGIN_SERVER || proxySettings.origin,
+        API_PREFIX: proxySettings.prefix
       }
     );
   // Stringify all values so we can feed into Webpack DefinePlugin

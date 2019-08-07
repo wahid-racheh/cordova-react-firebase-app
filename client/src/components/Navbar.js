@@ -22,18 +22,19 @@ import { ADD_SCREAM, ADD_CONTACT } from "../utils/constants";
 import AuthGuardWrapper from "../utils/AuthGuardWrapper";
 
 class Navbar extends Component {
+  isActionOf = action => {
+    return this.props.addAction === action;
+  };
+
+  doLogout = () => {
+    this.props.logoutUser();
+    this.isActionOf(ADD_CONTACT) && (window.location.href = "/login");
+  };
+
   render() {
-    const { logoutUser, addAction } = this.props;
-
-    const isActionOf = action => {
-      return addAction === action;
-    };
-
-    const addButtonWrapper = isActionOf(ADD_SCREAM) ? (
+    const addButtonWrapper = this.isActionOf(ADD_SCREAM) ? (
       <PostScream />
-    ) : isActionOf(ADD_CONTACT) ? (
-      <PostContact />
-    ) : null;
+    ) : this.isActionOf(ADD_CONTACT) ? null : null; //TODO: <PostContact />
     return (
       <AppBar position="fixed">
         <Toolbar className="nav-container">
@@ -49,12 +50,12 @@ class Navbar extends Component {
                 {/* <MyButton tip="Notifications">
                   <NotificationsIcon />
                 </MyButton> */}
-                <Link to="/contacts">
+                <Link to="/contact">
                   <MyButton tip="Contacts">
                     <HowToRegIcon />
                   </MyButton>
                 </Link>
-                <MyButton tip="Logout" onClick={logoutUser}>
+                <MyButton tip="Logout" onClick={this.doLogout}>
                   <ExitToAppIcon />
                 </MyButton>
               </Fragment>

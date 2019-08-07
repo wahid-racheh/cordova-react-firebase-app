@@ -28,5 +28,9 @@
   "homepage": "https://github.com/wahid-racheh/social-app#readme",
   "devDependencies": {
     "path": "^0.12.7"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15",
+    "rxjs": "^6.5.2"
   }
 }

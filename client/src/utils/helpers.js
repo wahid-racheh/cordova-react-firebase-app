@@ -2,13 +2,16 @@ import jwtDecode from "jwt-decode";
 import axios from "axios";
 import { SET_AUTHENTICATED } from "../redux/types";
 import { logoutUser, getUserData } from "../redux/actions/user.actions";
+import { stopSync } from "../redux/actions/contact.actions";
 import { isSmart } from "./utility";
+import { mergeArrays, sortArray } from "./utility";
 
 export function handleResponse(response) {
   console.log("########### response ###########");
   console.log(response);
   console.log("############## end #############");
-  return Promise.resolve(response.data);
+  const { data } = response;
+  return Promise.resolve(data);
 }
 
 export function handleFailure(failure) {
@@ -29,6 +32,18 @@ export function handleFailure(failure) {
     return Promise.reject({ general: "Something went wrong!!" });
   }
 }
+
+export const checkSession = store => {
+  axios.interceptors.response.use(config => {
+    const { status } = config;
+    if (status === 403) {
+      store.dispatch(stopSync());
+      store.dispatch(logoutUser());
+      window.location.href = "/login";
+    }
+    return config;
+  });
+};
 
 export const setAuthorization = store => {
   const token = localStorage.FBIdToken;
@@ -77,6 +92,37 @@ export const setServerRuntime = (resolve, reject) => {
   }
 };
 
+export const mergeContacts = (idKey, webList, nativeList, sortCriteria) => {
+  const mergedList = mergeArrays(
+    idKey,
+    {
+      displayName: "",
+      firstName: "",
+      phoneNumberId: "",
+      lastName: "",
+      thumbnail: "",
+      phoneNumbers: ""
+    },
+    [...webList],
+    [...nativeList]
+  );
+  const result = mergedList.map(contact => {
+    const isWeb = !!webList.find(
+      c => c.phoneNumberId === contact.phoneNumberId
+    );
+    const isNative = !!nativeList.find(
+      c => c.phoneNumberId === contact.phoneNumberId
+    );
+    return {
+      ...contact,
+      isSyncing: false,
+      shouldBeSynced: !contact.isDuplicated && isNative,
+      shouldBeAddedToDevice: !contact.isDuplicated && isWeb && !isNative
+    };
+  });
+  return sortArray(result, sortCriteria);
+};
+
 // axios.defaults.transformResponse = data => {
 //   let resp;
 //   try {
@@ -88,9 +134,5 @@ export const setServerRuntime = (resolve, reject) => {
 //       )}`
 //     );
 //   }
-//   if (resp.status === 403) {
-//     store.dispatch(logoutUser());
-//   } else {
-//     return resp;
-//   }
+//   return resp;
 // };

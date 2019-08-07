@@ -11,11 +11,13 @@ import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Checkbox from "@material-ui/core/Checkbox";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { compose } from "recompose";
 import LoaderHOC from "../loader/LoaderHOC";
 
 import Initials from "../../utils/Initials";
+import { isSmart } from "../../utils/utility";
 
 import { ContactConsumer } from "./ContactContext";
 
@@ -24,12 +26,27 @@ const styles = theme => {
     ...theme,
     contacts: {
       width: "100%",
-      backgroundColor: theme.palette.background.paper
+      backgroundColor: theme.palette.background.paper,
+      padding: 0
     },
     fab: {
       position: "absolute",
       bottom: 2,
       right: 2
+    },
+    syncContact: {
+      background: "#f0f8ff"
+    },
+    saveContact: {
+      background: "#faebd7"
+    },
+    devider: {
+      margin: 0
+    },
+    progress: {
+      top: "0.2rem",
+      right: "1rem",
+      position: "relative"
     }
   };
 };
@@ -38,10 +55,10 @@ class ContactList extends Component {
   render() {
     const { classes } = this.props;
 
-    const avatarWrapper = (firstName, lastName, thumbnail, id) => {
-      return thumbnail ? (
+    const avatarWrapper = (firstName, lastName, thumbnail, phoneNumberId) => {
+      return isSmart() && thumbnail ? (
         <ListItemAvatar>
-          <Avatar alt={`Avatar n°${id + 1}`} src={thumbnail} />
+          <Avatar alt={`Avatar n°${phoneNumberId + 1}`} src={thumbnail} />
         </ListItemAvatar>
       ) : (
         <Initials text={`${firstName} ${lastName}`} />
@@ -50,24 +67,53 @@ class ContactList extends Component {
 
     return (
       <ContactConsumer>
-        {({ contacts, enableSelection, handleSelectItem, setChecked }) => {
+        {({ allContacts, enableSelection, handleSelectItem, setChecked }) => {
           return (
             <List className={classes.contacts}>
-              {contacts.map(
-                ({ id, firstName, lastName, phoneNumbers, thumbnail }) => {
-                  const labelId = `checkbox-list-secondary-label-${id}`;
+              {allContacts.map(
+                ({
+                  phoneNumberId,
+                  firstName,
+                  lastName,
+                  phoneNumbers,
+                  thumbnail,
+                  shouldBeSynced,
+                  shouldBeAddedToDevice,
+                  isDuplicated,
+                  isSyncing,
+                  contactId
+                }) => {
+                  const labelId = `checkbox-list-secondary-label-${phoneNumberId}`;
                   const firstPhoneNumber =
                     phoneNumbers && phoneNumbers.length && phoneNumbers[0];
+
+                  const cssClass =
+                    (!isDuplicated &&
+                      ((shouldBeSynced && classes.syncContact) ||
+                        (shouldBeAddedToDevice && classes.saveContact))) ||
+                    null;
+
                   return (
-                    <Fragment key={id}>
+                    <Fragment key={contactId}>
                       <ListItem
-                        key={id}
+                        key={contactId}
                         role={undefined}
                         dense
                         button
-                        onClick={handleSelectItem(id)}
+                        disableRipple={isDuplicated}
+                        onClick={handleSelectItem({
+                          phoneNumberId,
+                          isDuplicated,
+                          isSyncing
+                        })}
+                        className={cssClass}
                       >
-                        {avatarWrapper(firstName, lastName, thumbnail, id)}
+                        {avatarWrapper(
+                          firstName,
+                          lastName,
+                          thumbnail,
+                          phoneNumberId
+                        )}
                         <ListItemText
                           id={labelId}
                           primary={`${firstName} ${lastName}`}
@@ -85,19 +131,31 @@ class ContactList extends Component {
                             </React.Fragment>
                           }
                         />
-                        {enableSelection ? (
+                        {enableSelection && !isDuplicated ? (
                           <ListItemSecondaryAction>
-                            <Checkbox
-                              edge="start"
-                              checked={setChecked(id)}
-                              tabIndex={-1}
-                              disableRipple
-                              inputProps={{ "aria-labelledby": labelId }}
-                            />
+                            {isSyncing ? (
+                              <CircularProgress
+                                size={24}
+                                className={classes.progress}
+                                color="primary"
+                              />
+                            ) : (
+                              <Checkbox
+                                edge="start"
+                                checked={setChecked(phoneNumberId)}
+                                tabIndex={-1}
+                                disableRipple
+                                inputProps={{ "aria-labelledby": labelId }}
+                              />
+                            )}
                           </ListItemSecondaryAction>
                         ) : null}
                       </ListItem>
-                      <Divider variant="inset" component="li" />
+                      <Divider
+                        variant="inset"
+                        component="li"
+                        className={classes.devider}
+                      />
                     </Fragment>
                   );
                 }
@@ -116,7 +174,7 @@ ContactList.propTypes = {
 
 const enhance = compose(
   withStyles(styles),
-  LoaderHOC("contacts")
+  LoaderHOC("allContacts")
 );
 
 export default enhance(ContactList);
