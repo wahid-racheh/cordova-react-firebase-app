@@ -1,8 +1,10 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { compose } from "recompose";
+
 import withStyles from "@material-ui/core/styles/withStyles";
 
+import ReactPullToRefreshWrapper from "../../../shared/components/pulltorefresh/ReactPullToRefreshWrapper";
 import ContactList from "../components/ContactList";
 import { ADD_CONTACT } from "../../../constants";
 
@@ -55,7 +57,8 @@ class Contact extends Component {
       classes,
       data: { contacts, loading, isSyncingItems },
       syncContacts,
-      stopSync
+      stopSync,
+      getContacts
     } = this.props;
     return (
       <ContactProvider
@@ -86,63 +89,70 @@ class Contact extends Component {
               : null;
             return (
               <Fragment>
-                {!loading && !allContacts.length ? (
-                  <Typography variant="h4" className={classes.pageTitle}>
-                    No contact found !
-                  </Typography>
-                ) : (
-                  <Fragment>
-                    {!loading && !!allIds.length && (
-                      <Grid container>
-                        <Grid item sm={10} xs={10}>
-                          <FormGroup>
-                            <Grid container>
-                              <Grid item sm={4}>
-                                <FormControlLabel
-                                  control={
-                                    <Checkbox
-                                      checked={selectSyncCloud}
-                                      onChange={handleSelectCloud}
-                                      disabled={!cloudIds.length}
-                                    />
-                                  }
-                                  label="Sync Clound"
-                                />
+                <ReactPullToRefreshWrapper
+                  loading={loading}
+                  action={getContacts}
+                >
+                  {!loading && !allContacts.length ? (
+                    <Typography variant="h4" className={classes.pageTitle}>
+                      No contact found !
+                    </Typography>
+                  ) : (
+                    <Fragment>
+                      {!loading && !!allIds.length && (
+                        <Grid container>
+                          <Grid item sm={10} xs={10}>
+                            <FormGroup>
+                              <Grid container>
+                                <Grid item sm={4}>
+                                  <FormControlLabel
+                                    control={
+                                      <Checkbox
+                                        checked={selectSyncCloud}
+                                        onChange={handleSelectCloud}
+                                        disabled={!cloudIds.length}
+                                      />
+                                    }
+                                    label="Sync Clound"
+                                  />
+                                </Grid>
+                                <Grid item sm={4}>
+                                  <FormControlLabel
+                                    control={
+                                      <Checkbox
+                                        checked={selectSyncDevice}
+                                        onChange={handleSelectDevice}
+                                        disabled={!nativeIds.length}
+                                      />
+                                    }
+                                    label="Sync Device"
+                                  />
+                                </Grid>
+                                <Grid item sm={4} />
                               </Grid>
-                              <Grid item sm={4}>
-                                <FormControlLabel
-                                  control={
-                                    <Checkbox
-                                      checked={selectSyncDevice}
-                                      onChange={handleSelectDevice}
-                                      disabled={!nativeIds.length}
-                                    />
-                                  }
-                                  label="Sync Device"
-                                />
-                              </Grid>
-                              <Grid item sm={4} />
-                            </Grid>
-                          </FormGroup>
+                            </FormGroup>
+                          </Grid>
+                          <Grid item sm={2} xs={2}>
+                            <MyButton
+                              tip="Sync"
+                              onClick={handleSynchronize}
+                              btnClassName={`${btnSyncClassName} ${
+                                classes.btnSync
+                              }`}
+                            >
+                              <SyncIcon
+                                color={
+                                  !isSyncingItems ? "primary" : "secondary"
+                                }
+                              />
+                            </MyButton>
+                          </Grid>
                         </Grid>
-                        <Grid item sm={2} xs={2}>
-                          <MyButton
-                            tip="Sync"
-                            onClick={handleSynchronize}
-                            btnClassName={`${btnSyncClassName} ${
-                              classes.btnSync
-                            }`}
-                          >
-                            <SyncIcon
-                              color={!isSyncingItems ? "primary" : "secondary"}
-                            />
-                          </MyButton>
-                        </Grid>
-                      </Grid>
-                    )}
-                    <ContactList {...props} />
-                  </Fragment>
-                )}
+                      )}
+                      <ContactList {...props} />
+                    </Fragment>
+                  )}
+                </ReactPullToRefreshWrapper>
               </Fragment>
             );
           }}

@@ -1,18 +1,26 @@
-exports.compactObject = obj => {
-  const data = obj ? obj : {};
+const isEmpty = prop =>
+  prop === null ||
+  prop === undefined ||
+  (prop.hasOwnProperty("length") && prop.length === 0) ||
+  (prop.constructor === Object && Object.keys(prop).length === 0);
+
+const isEmail = email => {
+  const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return email.match(regex);
+};
+
+const compactObject = obj => {
+  const data = !isEmpty(obj) ? obj : {};
   return Object.entries(data).reduce((newObject, [key, value]) => {
-    if (value !== "" && value !== null && value !== undefined) {
+    if (!isEmpty(value)) {
       newObject[key] = value;
     }
     return newObject;
   }, {});
 };
 
-exports.isEmpty = str => {
-  return str.trim() === "";
-};
-
-exports.isEmail = email => {
-  const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return email.match(regex);
+module.exports = {
+  isEmpty,
+  isEmail,
+  compactObject
 };

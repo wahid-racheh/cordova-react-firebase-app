@@ -1,11 +1,6 @@
 import React, { Component } from "react";
 import "./LoaderHOC.css";
-
-const isEmpty = prop =>
-  prop === null ||
-  prop === undefined ||
-  (prop.hasOwnProperty("length") && prop.length === 0) ||
-  (prop.constructor === Object && Object.keys(prop).length === 0);
+import { isEmpty } from "../../../utils/utility";
 
 const LoaderHOC = propName => WrappedComponent => {
   return class LoaderHOC extends Component {

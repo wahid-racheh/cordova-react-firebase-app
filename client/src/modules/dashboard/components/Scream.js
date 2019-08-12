@@ -114,7 +114,11 @@ class Scream extends Component {
       ) : null;
     return (
       <Card className={classes.card}>
-        <CardActionArea component="div" className={classes.cardActionArea}>
+        <CardActionArea
+          disableRipple
+          component="div"
+          className={classes.cardActionArea}
+        >
           <CardMedia
             component="img"
             alt="user image"

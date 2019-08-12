@@ -1,8 +1,11 @@
-import { isEqual, sortBy } from "lodash";
+import { sortBy } from "lodash";
 
-export const isEmpty = obj => {
+export const isEmpty = prop => {
   return (
-    obj === null || obj === undefined || obj === "" || obj === [] || obj === {}
+    prop === null ||
+    prop === undefined ||
+    (prop.hasOwnProperty("length") && prop.length === 0) ||
+    (prop.constructor === Object && Object.keys(prop).length === 0)
   );
 };
 

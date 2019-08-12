@@ -2,17 +2,7 @@
 // Updated by Wahid Racheh
 import React from "react";
 import { connect } from "react-redux";
-
-function componentHasChild(child) {
-  for (const property in AuthGuardWrapper) {
-    if (AuthGuardWrapper.hasOwnProperty(property)) {
-      if (child.type === AuthGuardWrapper[property]) {
-        return true;
-      }
-    }
-  }
-  return false;
-}
+import { componentHasChild } from "../../helpers";
 
 class AuthGuardWrapper extends React.Component {
   static On = ({ authenticated, children }) =>
@@ -31,7 +21,7 @@ class AuthGuardWrapper extends React.Component {
     //
     // 🐨 you'll want to completely replace the code below with the above logic.
     return React.Children.map(this.props.children, childElement => {
-      if (componentHasChild(childElement)) {
+      if (componentHasChild(childElement, AuthGuardWrapper)) {
         return React.cloneElement(childElement, {
           authenticated: this.props.authenticated
         });

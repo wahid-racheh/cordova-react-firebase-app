@@ -4,6 +4,8 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 import { compose } from "recompose";
 
+import ReactPullToRefreshWrapper from "../../../shared/components/pulltorefresh/ReactPullToRefreshWrapper";
+
 import Grid from "@material-ui/core/Grid";
 import Profile from "../components/Profile";
 
@@ -24,11 +26,13 @@ class Home extends Component {
   }
 
   render() {
-    const { classes, screams } = this.props;
+    const { classes, screams, loading, getScreams } = this.props;
     return (
       <Grid container spacing={16} className={classes.home}>
         <Grid item sm={8} xs={12}>
-          <ScreamList screams={screams} />
+          <ReactPullToRefreshWrapper loading={loading} action={getScreams}>
+            <ScreamList screams={screams} />
+          </ReactPullToRefreshWrapper>
         </Grid>
 
         <Grid item sm={4} xs={12}>
@@ -52,7 +56,7 @@ Home.propTypes = {
 
 const enhance = compose(
   connect(
-    state => ({ screams: state.scream.screams }),
+    state => ({ screams: state.scream.screams, loading: state.scream.loading }),
     { setAddAction, getScreams }
   ),
   withStyles(styles)
