@@ -18,7 +18,7 @@ const syncSubscriptions = [];
 export const getNativeContacts = () => (dispatch, getState, { api, mocks }) => {
   api.ContactApi.getNativeContacts()
     .then(data => {
-      console.log("data : ", JSON.stringify(data));
+      console.log(JSON.stringify(data));
       dispatch({
         type: MERGE_CONTACTS,
         payload: data

@@ -5,6 +5,10 @@ import { isSmart } from "./utils/utility";
 import * as serviceWorker from "./serviceWorker";
 import { setServerRuntime, setServerOrigin } from "./helpers";
 
+// Hack to fix pull to refresh scroll issue
+// import hammer from "hammerjs";
+// hammer.defaults.touchAction = "pan-y";
+
 process.env.NODE_ENV === "production" &&
   setServerOrigin(process.env.REACT_APP_ORIGIN_SERVER);
 

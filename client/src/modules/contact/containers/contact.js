@@ -52,13 +52,18 @@ class Contact extends Component {
     this.props.getContacts();
   }
 
+  handleRefresh = loading => {
+    if (!loading) {
+      this.props.getContacts();
+    }
+  };
+
   render() {
     const {
       classes,
       data: { contacts, loading, isSyncingItems },
       syncContacts,
-      stopSync,
-      getContacts
+      stopSync
     } = this.props;
     return (
       <ContactProvider
@@ -91,7 +96,7 @@ class Contact extends Component {
               <Fragment>
                 <ReactPullToRefreshWrapper
                   loading={loading}
-                  action={getContacts}
+                  onRefresh={this.handleRefresh}
                 >
                   {!loading && !allContacts.length ? (
                     <Typography variant="h4" className={classes.pageTitle}>
