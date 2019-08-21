@@ -19,7 +19,7 @@ import Navbar from "./shared/components/Navbar";
 import AuthRoute from "./shared/components/AuthRoute";
 
 // Pages
-import Home from "./modules/dashboard/containers/home";
+import Home from "./modules/home/containers/home";
 import Login from "./modules/auth/containers/login";
 import Signup from "./modules/auth/containers/signup";
 import Contact from "./modules/contact/containers/contact";

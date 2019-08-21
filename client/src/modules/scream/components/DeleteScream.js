@@ -16,7 +16,7 @@ import { deleteScream } from "../../../redux/actions";
 const styles = theme => ({
   ...theme,
   deleteButton: {
-    left: "90%",
+    left: "88%",
     top: "10%",
     position: "absolute",
     [theme.breakpoints.down("sm")]: {

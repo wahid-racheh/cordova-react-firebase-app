@@ -30,6 +30,15 @@ exports.validateLoginData = data => {
   };
 };
 
+exports.validateScreamData = data => {
+  let errors = {};
+  if (isEmpty(data.body)) errors.body = "Must not be empty";
+  return {
+    errors,
+    valid: Object.keys(errors).length === 0
+  };
+};
+
 exports.reduceUserDetails = data => {
   let userDetails = {};
   if (!isEmpty(data.bio.trim())) userDetails.bio = data.bio;
