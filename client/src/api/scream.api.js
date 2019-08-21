@@ -8,6 +8,12 @@ const ScreamApi = {
       .then(handleResponse)
       .catch(handleFailure);
   },
+  getScream(screamId) {
+    return axios
+      .get(`${process.env.API_PREFIX}/scream/${screamId}`)
+      .then(handleResponse)
+      .catch(handleFailure);
+  },
   postScream(newScream) {
     return axios
       .post(`${process.env.API_PREFIX}/scream`, newScream)

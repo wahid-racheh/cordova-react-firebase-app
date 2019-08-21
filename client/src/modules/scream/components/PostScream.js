@@ -18,7 +18,7 @@ import CloseIcon from "@material-ui/icons/Close";
 
 // Reducx stuff
 import { connect } from "react-redux";
-import { postScream } from "../../../redux/actions";
+import { postScream, clearErrors } from "../../../redux/actions";
 
 const styles = theme => ({
   ...theme,
@@ -31,7 +31,10 @@ const styles = theme => ({
   closeButton: {
     position: "absolute",
     left: "80%",
-    top: "6%"
+    top: "6%",
+    [theme.breakpoints.up("sm")]: {
+      left: "90%"
+    }
   }
 });
 
@@ -46,6 +49,10 @@ class PostScream extends Component {
       this.setState({
         errors: nextProps.UI.errors
       });
+    } else if (!nextProps.UI.loading) {
+      this.setState(() => {
+        return { open: false, errors: {}, body: "" };
+      });
     }
   }
   handleOpen = () => {
@@ -54,8 +61,9 @@ class PostScream extends Component {
     });
   };
   handleClose = () => {
+    this.props.clearErrors();
     this.setState(() => {
-      return { open: false };
+      return { open: false, errors: {}, body: "" };
     });
   };
   handleChange = event => {
@@ -63,11 +71,12 @@ class PostScream extends Component {
       target: { name, value }
     } = event;
     this.setState(() => {
-      return { [name]: value };
+      return { [name]: value, errors: {} };
     });
   };
   handleSubmit = event => {
     event.preventDefault();
+    this.props.clearErrors();
     this.props.postScream({ body: this.state.body });
   };
   render() {
@@ -105,9 +114,10 @@ class PostScream extends Component {
                 multiline
                 rows="3"
                 placeholder="Scream at your fellow apes"
-                errors={errors.body}
-                helperText={errors.body}
                 className={classes.textField}
+                helperText={errors.body}
+                error={errors.body ? true : false}
+                value={this.state.body}
                 onChange={this.handleChange}
                 fullWidth
               />
@@ -136,11 +146,13 @@ class PostScream extends Component {
 
 PostScream.propTypes = {
   postScream: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   UI: PropTypes.object.isRequired
 };
 
 const mapActionsToprops = {
-  postScream
+  postScream,
+  clearErrors
 };
 
 const mapStateToProps = state => ({

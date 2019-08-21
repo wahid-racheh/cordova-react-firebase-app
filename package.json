@@ -1,5 +1,5 @@
 {
-  "name": "social-app",
+  "name": "cordova-react-firebase-app",
   "version": "1.0.0",
   "description": "Social App",
   "scripts": {
@@ -18,14 +18,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wahid-racheh/social-app.git"
+    "url": "git+https://github.com/wahid-racheh/cordova-react-firebase-app.git"
   },
   "author": "Racheh Wahid <racheh.wahid@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/wahid-racheh/social-app/issues"
+    "url": "https://github.com/wahid-racheh/cordova-react-firebase-app/issues"
   },
-  "homepage": "https://github.com/wahid-racheh/social-app#readme",
+  "homepage": "https://github.com/wahid-racheh/cordova-react-firebase-app#readme",
   "devDependencies": {
     "path": "^0.12.7"
   },

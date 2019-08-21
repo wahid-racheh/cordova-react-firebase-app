@@ -4,7 +4,8 @@ import {
   LOADING_UI,
   SET_MOUNTED,
   SET_UNMOUNTED,
-  SET_ADD_ACTION
+  SET_ADD_ACTION,
+  STOP_LOADING_UI
 } from "../types";
 
 import { ADD_SCREAM } from "../../constants";
@@ -34,6 +35,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loading: true
+      };
+    case STOP_LOADING_UI:
+      return {
+        ...state,
+        loading: false
       };
     case SET_MOUNTED:
       return {

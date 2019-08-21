@@ -8,6 +8,7 @@ export const END_LOADING_USER = "END_LOADING_USER";
 // UI reducer types
 export const SET_ERRORS = "SET_ERRORS";
 export const LOADING_UI = "LOADING_UI";
+export const STOP_LOADING_UI = "STOP_LOADING_UI";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const SET_MOUNTED = "SET_MOUNTED";
 export const SET_UNMOUNTED = "SET_UNMOUNTED";
