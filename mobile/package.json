@@ -19,8 +19,9 @@
   "dependencies": {
     "cordova-android": "^6.2.3",
     "cordova-plugin-android-permissions": "^1.0.0",
-    "cordova-plugin-contacts-phonenumbers": "0.0.12",
+    "cordova-plugin-contacts": "3.0.1",
     "cordova-plugin-customconfigparameters": "^3.0.0",
+    "cordova-plugin-device": "2.0.3",
     "cordova-plugin-sms": "^1.0.5"
   },
   "devDependencies": {
@@ -31,8 +32,9 @@
       "cordova-plugin-whitelist": {},
       "cordova-plugin-customconfigparameters": {},
       "cordova-plugin-sms": {},
-      "cordova-plugin-contacts-phonenumbers": {},
-      "cordova-plugin-android-permissions": {}
+      "cordova-plugin-android-permissions": {},
+      "cordova-plugin-contacts": {},
+      "cordova-plugin-device": {}
     },
     "platforms": [
       "android"

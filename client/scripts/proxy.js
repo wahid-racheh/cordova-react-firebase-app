@@ -11,12 +11,12 @@ const proxy = readJSONFileSync(
   path.resolve(__dirname, "../config/", proxyFileName)
 );
 
+proxy.prefix = serverConfig.apiPrefix;
 proxy.origin = `https://${serverConfig.region}-${
   serverConfig.firebaseConfig.projectId
-}.cloudfunctions.net/api`;
-
+}.cloudfunctions.net`;
 proxy.local = `http://localhost:5000/${serverConfig.firebaseConfig.projectId}/${
   serverConfig.region
-}/api`;
+}`;
 
 writeJSONFileSync(path.resolve(__dirname, "../config/", proxyFileName), proxy);

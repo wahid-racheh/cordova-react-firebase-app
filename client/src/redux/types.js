@@ -8,6 +8,7 @@ export const END_LOADING_USER = "END_LOADING_USER";
 // UI reducer types
 export const SET_ERRORS = "SET_ERRORS";
 export const LOADING_UI = "LOADING_UI";
+export const STOP_LOADING_UI = "STOP_LOADING_UI";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const SET_MOUNTED = "SET_MOUNTED";
 export const SET_UNMOUNTED = "SET_UNMOUNTED";
@@ -25,4 +26,9 @@ export const POST_SCREAM = "POST_SCREAM";
 //Contacts reducer types
 export const SET_CONTACTS = "SET_CONTACTS";
 export const LOADING_CONTACTS = "LOADING_CONTACTS";
-export const POST_CONTACT = "POST_CONTACT";
+export const SYNC_CONTACT = "SYNC_CONTACT";
+export const MERGE_CONTACTS = "MERGE_CONTACTS";
+export const START_SYNC_ITEM = "START_SYNC_ITEM";
+export const END_SYNC_ITEM = "END_SYNC_ITEM";
+export const START_SYNC = "START_SYNC";
+export const STOP_SYNC = "STOP_SYNC";

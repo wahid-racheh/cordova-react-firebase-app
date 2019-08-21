@@ -13,13 +13,19 @@ const proxyConfig = {
 };
 
 module.exports = function(app) {
-  app.use(proxy("/auth", proxyConfig));
-  app.use(proxy("/user", proxyConfig));
-  app.use(proxy("/scream", proxyConfig));
+  app.use(proxy(`${proxySettings.prefix}/auth`, proxyConfig));
+  app.use(proxy(`${proxySettings.prefix}/user`, proxyConfig));
+  app.use(proxy(`${proxySettings.prefix}/scream`, proxyConfig));
+  app.use(
+    proxy(`${proxySettings.prefix}/contact`, {
+      ...proxyConfig
+      //target: proxySettings.origin
+    })
+  );
 
   // Upload desn't work on local server
   app.use(
-    proxy("/upload", {
+    proxy(`${proxySettings.prefix}/upload`, {
       ...proxyConfig,
       target: proxySettings.origin
     })

@@ -1,7 +1,9 @@
 import {
   SET_SCREAMS,
+  SET_SCREAM,
   LOADING_SCREAMS,
   LOADING_UI,
+  STOP_LOADING_UI,
   LIKE_SCREAM,
   UNLIKE_SCREAM,
   DELETE_SCREAM,
@@ -12,23 +14,37 @@ import {
 
 export const getScreams = () => (dispatch, getState, { api }) => {
   dispatch({ type: LOADING_SCREAMS });
-  // const {
-  //   UI: { isMounted }
-  // } = getState();
   api.ScreamApi.getScreams()
     .then(data => {
-      // if (isMounted) {
       dispatch({
         type: SET_SCREAMS,
         payload: data
       });
-      // }
     })
     .catch(() => {
       dispatch({
         type: SET_SCREAMS,
         payload: []
       });
+    });
+};
+
+export const getScream = screamId => (dispatch, getState, { api }) => {
+  dispatch({ type: LOADING_UI });
+  api.ScreamApi.getScream(screamId)
+    .then(data => {
+      dispatch({
+        type: SET_SCREAM,
+        payload: data
+      });
+      dispatch({ type: STOP_LOADING_UI });
+    })
+    .catch(error => {
+      dispatch({
+        type: SET_ERRORS,
+        payload: error
+      });
+      dispatch({ type: STOP_LOADING_UI });
     });
 };
 
@@ -79,4 +95,8 @@ export const postScream = newScream => (dispatch, getState, { api }) => {
         payload: error
       });
     });
+};
+
+export const clearErrors = () => dispatch => {
+  dispatch({ type: CLEAR_ERRORS });
 };

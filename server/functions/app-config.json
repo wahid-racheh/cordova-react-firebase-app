@@ -1,5 +1,6 @@
 {
   "region": "europe-west1",
+  "apiPrefix": "/api",
   "whitelist": ["https://cordova-react-firebase.netlify.com"],
   "privateCertificate": {
     "type": "service_account",

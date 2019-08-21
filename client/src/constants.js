@@ -1,0 +1,31 @@
+export const ADD_SCREAM = "ADD_SCREAM";
+export const ADD_CONTACT = "ADD_CONTACT";
+export const CONTACT_FIELDS = [
+  "id",
+  "addresses",
+  "birthday",
+  "categories",
+  "country",
+  "department",
+  "displayName",
+  "emails",
+  "familyName",
+  "formatted",
+  "givenName",
+  "honorificPrefix",
+  "honorificSuffix",
+  "ims",
+  "locality",
+  "middleName",
+  "name",
+  "nickname",
+  "note",
+  "organizations",
+  "phoneNumbers",
+  "photos",
+  "postalCode",
+  "region",
+  "streetAddress",
+  "title",
+  "urls"
+];

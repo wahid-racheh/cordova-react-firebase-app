@@ -1,4 +1,5 @@
 {
-  "origin": "https://europe-west1-socialapp-d2a96.cloudfunctions.net/api",
-  "local": "http://localhost:5000/socialapp-d2a96/europe-west1/api"
+  "origin": "https://europe-west1-socialapp-d2a96.cloudfunctions.net",
+  "local": "http://localhost:5000/socialapp-d2a96/europe-west1",
+  "prefix": "/api"
 }

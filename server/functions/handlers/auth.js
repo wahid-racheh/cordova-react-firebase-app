@@ -1,12 +1,10 @@
-const { firebase, db } = require("../utils/admin");
+const { firebase, db } = require("../helpers/admin");
 const {
   validateSignupDate,
   validateLoginData
-} = require("../utils/validators");
-
-const { respondSuccess, respondFailure } = require("../utils/helpers");
-
-const { config } = require("../utils/helpers");
+} = require("../helpers/validators");
+const { respondSuccess, respondFailure } = require("../helpers/http");
+const { config } = require("../helpers/config");
 
 // Register a new user
 exports.signup = (req, res) => {

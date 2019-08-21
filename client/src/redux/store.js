@@ -1,12 +1,10 @@
-import { createStore, combineReducers, applyMiddleware, compose } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 
-import userReducer from "./reducers/user.reducer";
-import screamReducer from "./reducers/scream.reducer";
-import uiReducer from "./reducers/ui.reducer";
-import contactReducer from "./reducers/contact.reducer";
+import reducers from "./reducers";
 
 import api from "../api";
+import mocks from "../mocks";
 
 const initialState = {};
 
@@ -17,16 +15,7 @@ const logger = (/*store*/) => next => action => {
   return next(action);
 };
 
-const whatever = {};
-
-const middleWare = [logger, thunk.withExtraArgument({ api, whatever })];
-
-const reducers = combineReducers({
-  user: userReducer,
-  scream: screamReducer,
-  UI: uiReducer,
-  contact: contactReducer
-});
+const middleWare = [logger, thunk.withExtraArgument({ api, mocks })];
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

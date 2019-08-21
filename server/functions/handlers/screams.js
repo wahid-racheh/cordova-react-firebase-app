@@ -1,5 +1,6 @@
-const { db } = require("../utils/admin");
-const { respondSuccess, respondFailure } = require("../utils/helpers");
+const { db } = require("../helpers/admin");
+const { respondSuccess, respondFailure } = require("../helpers/http");
+const { validateScreamData } = require("../helpers/validators");
 
 // Get all screams
 exports.getAllScreams = (req, res) => {
@@ -33,6 +34,10 @@ exports.postOneScream = (req, res) => {
     likeCount: 0,
     commentCount: 0
   };
+
+  const { valid, errors } = validateScreamData(newScream);
+  if (!valid) return respondFailure(res, errors, 400);
+
   db.collection("screams")
     .add(newScream)
     .then(doc => {
