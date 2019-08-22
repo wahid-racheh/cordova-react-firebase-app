@@ -69,8 +69,10 @@ exports.getScreamById = (req, res) => {
     })
     .then(comments => {
       screamData.comments = [];
-      comments.forEach(comment => {
-        screamData.comments.push(comment.data());
+      comments.forEach(doc => {
+        const item = doc.data();
+        item.commentId = doc.id;
+        screamData.comments.push(item);
       });
       return respondSuccess(res, screamData);
     })
@@ -96,21 +98,21 @@ exports.commentOnScream = (req, res) => {
 
   db.doc(`/screams/${req.params.screamId}`)
     .get()
-    .then(screamDoc => {
-      if (!screamDoc.exists) {
+    .then(doc => {
+      if (!doc.exists) {
         return respondFailure(res, { error: "Scream not found" }, 404);
       }
-      return screamDoc.ref.update({
-        commentCount: parseInt(screamDoc.data().commentCount + 1)
+      return doc.ref.update({
+        commentCount: parseInt(doc.data().commentCount + 1)
       });
     })
     .then(() => {
       return db.collection("comments").add(newComment);
     })
-    .then(commentDoc => {
-      return respondSuccess(res, {
-        message: `comment ${commentDoc.id} created successfully`
-      });
+    .then(doc => {
+      const resComment = newComment;
+      newComment.commentId = doc.id;
+      return respondSuccess(res, resComment);
     })
     .catch(err => respondFailure(res, err));
 };

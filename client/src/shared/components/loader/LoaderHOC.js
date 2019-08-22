@@ -16,7 +16,6 @@ const LoaderHOC = propName => WrappedComponent => {
       const myProps = {
         loadTime: (this.endTime - this.startTime / 1000).toFixed(2)
       };
-
       return isEmpty(this.props[propName]) ? (
         <div className="loader" />
       ) : (

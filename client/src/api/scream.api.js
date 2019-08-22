@@ -37,6 +37,12 @@ const ScreamApi = {
       .delete(`${process.env.API_PREFIX}/scream/${screamId}`)
       .then(handleResponse)
       .catch(handleFailure);
+  },
+  postComment(screamId, commentData) {
+    return axios
+      .post(`${process.env.API_PREFIX}/scream/${screamId}/comment`, commentData)
+      .then(handleResponse)
+      .catch(handleFailure);
   }
 };
 

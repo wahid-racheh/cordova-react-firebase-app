@@ -7,6 +7,8 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 import MyButton from "../../../shared/components/MyButton";
 import LikeButton from "./LikeButton";
+import Comments from "./Comments";
+import PostComment from "./PostComment";
 
 //MUI stuff
 import Dialog from "@material-ui/core/Dialog";
@@ -22,13 +24,14 @@ import UnfoldMoreIcon from "@material-ui/icons/UnfoldMore";
 
 // Redux
 import { connect } from "react-redux";
-import { getScream } from "../../../redux/actions/scream.actions";
+import { getScream, clearErrors } from "../../../redux/actions/scream.actions";
 
 const styles = theme => ({
   ...theme,
-  invisibleSeperator: {
-    border: "none",
-    margin: 4
+  dialogContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
   },
   closeButton: {
     position: "absolute",
@@ -70,6 +73,7 @@ class ScreamDialog extends Component {
     this.props.getScream(this.props.screamId);
   };
   handleClose = () => {
+    this.props.clearErrors();
     this.setState(() => {
       return { open: false };
     });
@@ -85,7 +89,8 @@ class ScreamDialog extends Component {
           likeCount,
           commentCount,
           userImage,
-          userHandle
+          userHandle,
+          comments
         }
       },
       UI: { loading }
@@ -96,33 +101,43 @@ class ScreamDialog extends Component {
         <CircularProgress size={200} thickness={2} />
       </div>
     ) : (
-      <Grid container spacing={16}>
-        <Grid item sm={5}>
-          <img src={userImage} alt="Profile" className={classes.profileImage} />
-        </Grid>
-        <Grid item sm={7}>
-          <Typography
-            component={Link}
-            color="primary"
-            variant="h5"
-            to={`/users/${userHandle}`}
-          >
-            @{userHandle}
-          </Typography>
-          <hr className={classes.invisibleSeperator} />
-          <Typography variant="body2" color="textSecondary">
-            {dayjs(createdAt).format("h:mm a, MMMM DD YYYY")}
-          </Typography>
-          <hr className={classes.invisibleSeperator} />
-          <Typography variant="body1">{body}</Typography>
-          <LikeButton screamId={screamId} />
-          <span>{likeCount} Likes</span>
+      <Fragment>
+        <Grid container spacing={16} className={classes.dialogContainer}>
+          <Grid item sm={5}>
+            <img
+              src={userImage}
+              alt="Profile"
+              className={classes.profileImage}
+            />
+          </Grid>
+          <Grid item sm={7}>
+            <Typography
+              component={Link}
+              color="primary"
+              variant="h5"
+              to={`/users/${userHandle}`}
+            >
+              @{userHandle}
+            </Typography>
+            <hr className={classes.invisibleSeparator} />
+            <Typography variant="body2" color="textSecondary">
+              {dayjs(createdAt).format("h:mm a, MMMM DD YYYY")}
+            </Typography>
+            <hr className={classes.invisibleSeparator} />
+            <Typography variant="body1">{body}</Typography>
+            <LikeButton screamId={screamId} />
+            <span>{likeCount} Likes</span>
             <MyButton tip="comments">
               <ChatIcon color="primary" />
             </MyButton>
             <span>{commentCount} Comments</span>
+          </Grid>
+          <hr className={classes.visibleSeparator} />
+          <PostComment screamId={screamId} />
+          <hr className={classes.visibleSeparator} />
+          <Comments comments={comments} />
         </Grid>
-      </Grid>
+      </Fragment>
     );
     return (
       <Fragment>
@@ -157,6 +172,7 @@ class ScreamDialog extends Component {
 
 ScreamDialog.propTypes = {
   getScream: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   screamId: PropTypes.string.isRequired,
   userHandle: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired,
@@ -171,7 +187,7 @@ const mapStateToProps = state => ({
 const enhance = compose(
   connect(
     mapStateToProps,
-    { getScream }
+    { getScream, clearErrors }
   ),
   withStyles(styles)
 );
