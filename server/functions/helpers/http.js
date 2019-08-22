@@ -11,20 +11,17 @@ const getError = error => {
     data.status = 400;
     data.email = "email is already in use";
   } else if (error.code === "auth/wrong-password") {
-    data.status = 403;
+    data.status = 400;
     data.general = "Wrong credentials, please try again";
   } else if (error.code === "auth/id-token-expired") {
     data.status = 403;
     data.general = "Your session has expired.";
   } else if (error.code === "auth/wrong-password") {
-    data.status = 403;
+    data.status = 400;
     data.general = "Wrong credentials, please try again";
   } else if (error.code === "auth/weak-password") {
-    data.status = 403;
+    data.status = 400;
     data.password = "Password should contains at least 6 characters";
-  } else if (error.code === "auth/argument-error") {
-    data.status = 403;
-    data.general = "Session expired";
   } else if (error.code === "auth/invalid-email") {
     data.status = 400;
     data.email = "Invalid email address";
@@ -35,13 +32,14 @@ const getError = error => {
   return data;
 };
 
-exports.respondFailure = (res, err, statusCode) => {
+const respondFailure = (res, err, statusCode) => {
   let error = err;
   if (err.hasOwnProperty("code")) {
     error = getError(err);
   }
   return res.status(statusCode || error.status).json(error);
 };
+exports.respondFailure = respondFailure;
 
 exports.respondSuccess = (res, data, statusCode) => {
   return res.status(statusCode || 200).json(data);
@@ -55,10 +53,9 @@ exports.fbAuth = (req, res, next) => {
   ) {
     idToken = req.headers.authorization.split("Bearer ")[1];
   } else {
-    console.error("No token found");
-    return respondFailure(res, { error: "Unauthorized" }, 403);
+    return respondFailure(res, { error: "Unauthorized, no token found!" }, 403);
   }
-  return admin
+  admin
     .auth()
     .verifyIdToken(idToken)
     .then(decodedToken => {
@@ -76,7 +73,7 @@ exports.fbAuth = (req, res, next) => {
       return next();
     })
     .catch(err => {
-      console.error("Error while verifying token", err);
-      return respondFailure(res, err, 403);
+      console.error("Error while verifying token", err.errorInfo);
+      return respondFailure(res, err.errorInfo, 403);
     });
 };

@@ -5,7 +5,9 @@ import {
   LOADING_UI,
   SET_UNAUTHENTICATED,
   LOADING_USER,
-  END_LOADING_USER
+  END_LOADING_USER,
+  SET_SCREAMS,
+  SET_SELECTED_USER
 } from "../types";
 import axios from "axios";
 
@@ -74,6 +76,36 @@ export const getUserData = () => (dispatch, getState, { api }) => {
       dispatch({
         type: SET_ERRORS,
         payload: error
+      });
+    });
+};
+
+export const getUserDataByUserHandle = userHandle => (
+  dispatch,
+  getState,
+  { api }
+) => {
+  dispatch({ type: LOADING_UI });
+
+  api.UserApi.getUserDataByUserHandle(userHandle)
+    .then(data => {
+      dispatch({
+        type: SET_SCREAMS,
+        payload: data.screams
+      });
+      dispatch({
+        type: SET_SELECTED_USER,
+        payload: data.user
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: SET_SCREAMS,
+        payload: []
+      });
+      dispatch({
+        type: SET_SELECTED_USER,
+        payload: {}
       });
     });
 };

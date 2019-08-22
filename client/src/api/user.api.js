@@ -19,6 +19,12 @@ const UserApi = {
       .then(handleResponse)
       .catch(handleFailure);
   },
+  getUserDataByUserHandle(userHandle) {
+    return axios
+      .get(`${process.env.API_PREFIX}/user/${userHandle}`)
+      .then(handleResponse)
+      .catch(handleFailure);
+  },
   uploadImage(formData) {
     return axios
       .post(`${process.env.API_PREFIX}/upload/user/image`, formData, {

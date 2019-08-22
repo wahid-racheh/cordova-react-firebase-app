@@ -21,6 +21,9 @@ export function handleFailure(failure) {
     const {
       response: { data, status, statusText }
     } = failure;
+    if (status === 403) {
+      window.location.href = "/login";
+    }
     if (typeof data === "string" && (status === 404 || status === 504)) {
       return Promise.reject({ general: status + " : " + statusText });
     }
