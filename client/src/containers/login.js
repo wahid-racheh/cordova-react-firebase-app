@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Link } from "react-router-dom";
-import AppIcon from "../../../images/icon.png";
+import AppIcon from "../images/icon.png";
 
 // MUI stuff
 import TextField from "@material-ui/core/TextField";
@@ -13,7 +13,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 // Redux stuff
 import { connect } from "react-redux";
-import { loginUser } from "../../../redux/actions";
+import { loginUser } from "../redux/actions";
 
 const styles = theme => {
   return {

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import MyButton from "../../../shared/components/MyButton";
+import MyButton from "../common/MyButton";
 import DeleteScream from "./DeleteScream";
 import ScreamDialog from "./ScreamDialog";
 import LikeButton from "./LikeButton";

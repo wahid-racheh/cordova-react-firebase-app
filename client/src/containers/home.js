@@ -7,13 +7,13 @@ import { compose } from "recompose";
 // import ReactPullToRefreshWrapper from "../../../shared/components/pulltorefresh/ReactPullToRefreshWrapper";
 
 import Grid from "@material-ui/core/Grid";
-import Profile from "../../profile/components/Profile";
+import Profile from "../components/profile/Profile";
 
 // Reducx stuff
 import { connect } from "react-redux";
-import { getScreams, setAddAction } from "../../../redux/actions";
-import { ADD_SCREAM } from "../../../constants";
-import ScreamList from "../../scream/components/ScreamList";
+import { getScreams, setAddAction } from "../redux/actions";
+import { ADD_SCREAM } from "../constants";
+import ScreamList from "../components/scream/ScreamList";
 
 const styles = theme => ({
   ...theme

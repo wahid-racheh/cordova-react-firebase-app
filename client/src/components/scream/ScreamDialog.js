@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import withStyles from "@material-ui/core/styles/withStyles";
 
-import MyButton from "../../../shared/components/MyButton";
+import MyButton from "../common/MyButton";
 import LikeButton from "./LikeButton";
 import Comments from "./Comments";
 import PostComment from "./PostComment";
@@ -24,7 +24,7 @@ import UnfoldMoreIcon from "@material-ui/icons/UnfoldMore";
 
 // Redux
 import { connect } from "react-redux";
-import { getScream, clearErrors } from "../../../redux/actions/scream.actions";
+import { getScream, clearErrors } from "../../redux/actions/scream.actions";
 
 const styles = theme => ({
   ...theme,

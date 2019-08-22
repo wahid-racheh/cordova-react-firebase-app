@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
-import EditDetails from "../components/EditDetails";
-import MyButton from "../../../shared/components/MyButton";
-import LoaderHOC from "../../../shared/components/loader/LoaderHOC";
-import AuthGuardWrapper from "../../../shared/components/AuthGuardWrapper";
+import EditDetails from "./EditDetails";
+import MyButton from "../common/MyButton";
+import LoaderHOC from "../common/loader/LoaderHOC";
+import AuthGuardWrapper from "../common/AuthGuardWrapper";
 
 // MUI stuff
 import Button from "@material-ui/core/Button";
@@ -24,7 +24,7 @@ import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
 // Reducx stuff
 import { compose } from "recompose";
 import { connect } from "react-redux";
-import { logoutUser, uploadImage } from "../../../redux/actions";
+import { logoutUser, uploadImage } from "../../redux/actions";
 
 const styles = theme => ({
   ...theme

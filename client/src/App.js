@@ -15,14 +15,14 @@ import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 
 // Components
-import Navbar from "./shared/components/Navbar";
-import AuthRoute from "./shared/components/AuthRoute";
+import Navbar from "./components/common/Navbar";
+import AuthRoute from "./components/common/AuthRoute";
 
 // Pages
-import Home from "./modules/home/containers/home";
-import Login from "./modules/auth/containers/login";
-import Signup from "./modules/auth/containers/signup";
-import Contact from "./modules/contact/containers/contact";
+import Home from "./containers/home";
+import Login from "./containers/login";
+import Signup from "./containers/signup";
+import Contact from "./containers/contact";
 
 const theme = createMuiTheme(themeFile);
 

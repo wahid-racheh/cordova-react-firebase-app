@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { /*withState, withHandlers,*/ compose } from "recompose";
-import LoaderHOC from "../../../shared/components/loader/LoaderHOC";
-import Scream from "../components/Scream";
+import LoaderHOC from "../common/loader/LoaderHOC";
+import Scream from "./Scream";
 
 class ScreamList extends Component {
   render() {

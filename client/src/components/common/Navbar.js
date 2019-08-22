@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import MyButton from "./MyButton";
 import AuthGuardWrapper from "./AuthGuardWrapper";
-import PostScream from "../../modules/scream/components/PostScream";
+import PostScream from "../scream/PostScream";
 // import PostContact from "../../modules/dashboard/components/PostContact";
 
 // MUI stuff

@@ -9,7 +9,7 @@ import TextField from "@material-ui/core/TextField";
 
 //Redux stuff
 import { connect } from "react-redux";
-import { postComment } from "../../../redux/actions";
+import { postComment } from "../../redux/actions";
 import { Button } from "@material-ui/core";
 
 const styles = theme => ({

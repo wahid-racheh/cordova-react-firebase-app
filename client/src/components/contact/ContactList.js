@@ -14,13 +14,13 @@ import Checkbox from "@material-ui/core/Checkbox";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { compose } from "recompose";
-import LoaderHOC from "../../../shared/components/loader/LoaderHOC";
+import LoaderHOC from "../common/loader/LoaderHOC";
 
-import Initials from "../../../shared/components/Initials";
+import Initials from "../common/Initials";
 
-import { isSmart, isEmpty } from "../../../utils/utility";
+import { isSmart, isEmpty } from "../../utils/utility";
 
-import { ContactConsumer } from "../ContactContext";
+import { ContactConsumer } from "./ContactContext";
 
 const styles = theme => {
   return {

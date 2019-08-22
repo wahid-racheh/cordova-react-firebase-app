@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 
-import MyButton from "../../../shared/components/MyButton";
+import MyButton from "../common/MyButton";
 
 //MUI stuff
 import Button from "@material-ui/core/Button";
@@ -11,7 +11,6 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Typography from "@material-ui/core/Typography";
 
 // Icons
 import AddIcon from "@material-ui/icons/Add";
@@ -19,7 +18,7 @@ import CloseIcon from "@material-ui/icons/Close";
 
 // Reducx stuff
 import { connect } from "react-redux";
-import { syncContact } from "../../../redux/actions";
+import { postScream, clearErrors } from "../../redux/actions";
 
 const styles = theme => ({
   ...theme,
@@ -32,16 +31,14 @@ const styles = theme => ({
   closeButton: {
     position: "absolute",
     left: "80%",
-    top: "6%"
-  },
-  customErrorMsg: {
-    ...theme.customError,
-    paddingBottom: "1rem",
-    textAlign: "center"
+    top: "6%",
+    [theme.breakpoints.up("sm")]: {
+      left: "90%"
+    }
   }
 });
 
-class PostContact extends Component {
+class PostScream extends Component {
   state = {
     open: false,
     body: "",
@@ -52,6 +49,10 @@ class PostContact extends Component {
       this.setState({
         errors: nextProps.UI.errors
       });
+    } else if (!nextProps.UI.loading) {
+      this.setState(() => {
+        return { open: false, errors: {}, body: "" };
+      });
     }
   }
   handleOpen = () => {
@@ -60,8 +61,9 @@ class PostContact extends Component {
     });
   };
   handleClose = () => {
+    this.props.clearErrors();
     this.setState(() => {
-      return { open: false };
+      return { open: false, errors: {}, body: "" };
     });
   };
   handleChange = event => {
@@ -69,12 +71,13 @@ class PostContact extends Component {
       target: { name, value }
     } = event;
     this.setState(() => {
-      return { [name]: value };
+      return { [name]: value, errors: {} };
     });
   };
   handleSubmit = event => {
     event.preventDefault();
-    this.props.syncContact({ body: this.state.body });
+    this.props.clearErrors();
+    this.props.postScream({ body: this.state.body });
   };
   render() {
     const { errors } = this.state;
@@ -82,10 +85,9 @@ class PostContact extends Component {
       classes,
       UI: { loading }
     } = this.props;
-
     return (
       <Fragment>
-        <MyButton tip="Post a contact" onClick={this.handleOpen}>
+        <MyButton tip="Post a scream" onClick={this.handleOpen}>
           <AddIcon color="primary" />
         </MyButton>
         <Dialog
@@ -102,53 +104,23 @@ class PostContact extends Component {
           >
             <CloseIcon />
           </MyButton>
-          <DialogTitle id="form-dialog-title">Post a new Contact</DialogTitle>
+          <DialogTitle id="form-dialog-title">Post a new Scream</DialogTitle>
           <DialogContent>
             <form onSubmit={this.handleSubmit}>
               <TextField
-                name="firstName"
+                name="body"
                 type="text"
-                label="First name"
+                label="SCREAM!!"
                 multiline
-                rows="1"
-                placeholder="First name"
-                errors={errors.firstName}
-                helperText={errors.firstName}
+                rows="3"
+                placeholder="Scream at your fellow apes"
                 className={classes.textField}
+                helperText={errors.body}
+                error={errors.body ? true : false}
+                value={this.state.body}
                 onChange={this.handleChange}
                 fullWidth
               />
-              <TextField
-                name="lastName"
-                type="text"
-                label="Last name"
-                multiline
-                rows="1"
-                placeholder="Last name"
-                errors={errors.lastName}
-                helperText={errors.lastName}
-                className={classes.textField}
-                onChange={this.handleChange}
-                fullWidth
-              />
-              <TextField
-                name="middleName"
-                type="text"
-                label="Middle name"
-                multiline
-                rows="1"
-                placeholder="Middle name"
-                errors={errors.middleName}
-                helperText={errors.middleName}
-                className={classes.textField}
-                onChange={this.handleChange}
-                fullWidth
-              />
-              {errors.general && (
-                <Typography variant="body2" className={classes.customErrorMsg}>
-                  {errors.general}
-                </Typography>
-              )}
               <Button
                 type="submit"
                 variant="contained"
@@ -172,13 +144,15 @@ class PostContact extends Component {
   }
 }
 
-PostContact.propTypes = {
-  syncContact: PropTypes.func.isRequired,
+PostScream.propTypes = {
+  postScream: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   UI: PropTypes.object.isRequired
 };
 
 const mapActionsToprops = {
-  syncContact
+  postScream,
+  clearErrors
 };
 
 const mapStateToProps = state => ({
@@ -187,4 +161,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   mapActionsToprops
-)(withStyles(styles)(PostContact));
+)(withStyles(styles)(PostScream));

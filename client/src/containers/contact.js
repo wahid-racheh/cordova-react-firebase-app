@@ -4,15 +4,15 @@ import { compose } from "recompose";
 
 import withStyles from "@material-ui/core/styles/withStyles";
 
-import ReactPullToRefreshWrapper from "../../../shared/components/pulltorefresh/ReactPullToRefreshWrapper";
-import ContactList from "../components/ContactList";
-import { ADD_CONTACT } from "../../../constants";
+import ReactPullToRefreshWrapper from "../components/common/pulltorefresh/ReactPullToRefreshWrapper";
+import ContactList from "../components/contact/ContactList";
+import { ADD_CONTACT } from "../constants";
 
-import { ContactProvider, ContactConsumer } from "../ContactContext";
+import { ContactProvider, ContactConsumer } from "../components/contact/ContactContext";
 
 import Grid from "@material-ui/core/Grid";
 
-import MyButton from "../../../shared/components/MyButton";
+import MyButton from "../components/common/MyButton";
 import Typography from "@material-ui/core/Typography";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormGroup from "@material-ui/core/FormGroup";
@@ -27,7 +27,7 @@ import {
   syncContacts,
   stopSync,
   setAddAction
-} from "../../../redux/actions";
+} from "../redux/actions";
 
 const styles = theme => {
   return {
