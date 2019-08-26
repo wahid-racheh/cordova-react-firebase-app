@@ -40,12 +40,22 @@ class App extends Component {
             <div className="container">
               <Navbar />
               <Switch>
-                <AuthRoute path="/login" component={Login} />
-                <AuthRoute path="/signup" component={Signup} />
-                <AuthRoute path="/contact" component={Contact} />
-                <AuthRoute path="/users/:handle" component={User} />
+                <AuthRoute exact path="/login" component={Login} />
+                <AuthRoute exact path="/signup" component={Signup} />
+                <Route exact path="/contact" component={Contact} />
+                <Route exact path="/users/:handle" component={User} />
+                <Route
+                  exact
+                  path="/users/:handle/scream/:screamId"
+                  component={User}
+                />
+                <Route
+                  exact
+                  path="/users/:handle/scream/:screamId/:notificationId"
+                  component={User}
+                />
                 {/* exact does'nt work in cordova application <Route exact={true}  path="/" component={Home} /> */}
-                <Route path="/" component={Home} />
+                <Route exact path="/" component={Home} />
               </Switch>
             </div>
           </BrowserRouter>

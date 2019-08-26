@@ -1,29 +1,23 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import AuthGuardWrapper from "./AuthGuardWrapper";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
-const AUTH_ROUTES = ["/login", "/signup"];
-
-function isAuthRoute(path) {
-  return AUTH_ROUTES.includes(path);
-}
-
-const AuthRoute = ({ component: Component, path, ...rest }) => (
+const AuthRoute = ({ component: Component, authenticated, ...rest }) => (
   <Route
     {...rest}
-    render={props => {
-      return (
-        <AuthGuardWrapper>
-          <AuthGuardWrapper.On>
-            <Component {...props} />
-          </AuthGuardWrapper.On>
-          <AuthGuardWrapper.Off>
-            {isAuthRoute(path) ? <Component {...props} /> : <Redirect to="/" />}
-          </AuthGuardWrapper.Off>
-        </AuthGuardWrapper>
-      );
-    }}
+    render={props =>
+      authenticated ? <Redirect to="/" /> : <Component {...props} />
+    }
   />
 );
 
-export default AuthRoute;
+const mapStateToProps = state => ({
+  authenticated: state.user.authenticated
+});
+
+AuthRoute.propTypes = {
+  user: PropTypes.object
+};
+
+export default connect(mapStateToProps)(AuthRoute);

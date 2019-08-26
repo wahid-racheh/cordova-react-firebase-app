@@ -7,7 +7,9 @@ import {
   LOADING_USER,
   END_LOADING_USER,
   SET_SCREAMS,
-  SET_SELECTED_USER
+  SET_SELECTED_USER,
+  STOP_LOADING_USER,
+  MARK_NOTIFICATIONS_READ
 } from "../types";
 import axios from "axios";
 
@@ -85,28 +87,21 @@ export const getUserDataByUserHandle = userHandle => (
   getState,
   { api }
 ) => {
-  dispatch({ type: LOADING_UI });
+  function setInternalData(data) {
+    dispatch({ type: SET_SCREAMS, payload: data.screams });
+    dispatch({ type: SET_SELECTED_USER, payload: data.user });
+  }
 
+  dispatch({ type: LOADING_USER });
+  setInternalData({ screams: [], user: {} });
   api.UserApi.getUserDataByUserHandle(userHandle)
     .then(data => {
-      dispatch({
-        type: SET_SCREAMS,
-        payload: data.screams
-      });
-      dispatch({
-        type: SET_SELECTED_USER,
-        payload: data.user
-      });
+      setInternalData(data);
+      dispatch({ type: STOP_LOADING_USER });
     })
     .catch(() => {
-      dispatch({
-        type: SET_SCREAMS,
-        payload: []
-      });
-      dispatch({
-        type: SET_SELECTED_USER,
-        payload: {}
-      });
+      setInternalData({ screams: [], user: {} });
+      dispatch({ type: STOP_LOADING_USER });
     });
 };
 
@@ -139,6 +134,21 @@ export const editUserDetails = useDetails => (dispatch, getState, { api }) => {
       });
     });
 };
+
+export const markNotificationsRead = notificationsIds => (
+  dispatch,
+  getState,
+  { api }
+) => {
+  api.UserApi.markNotificationsRead(notificationsIds)
+    .then(() => {
+      dispatch({
+        type: MARK_NOTIFICATIONS_READ
+      });
+    })
+    .catch(error => console.log(error));
+};
+
 const setAuthorizationHeader = token => {
   const FBIdToken = `Bearer ${token}`;
   localStorage.setItem("FBIdToken", FBIdToken);

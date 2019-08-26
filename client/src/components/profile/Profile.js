@@ -53,72 +53,80 @@ class Profile extends Component {
     return (
       <AuthGuardWrapper>
         <AuthGuardWrapper.On>
-          <Paper className={classes.paper}>
-            <div className={classes.profile}>
-              <div className="image-wrapper">
-                <img src={imageUrl} alt="profile" className="profile-image" />
+          {!handle ? (
+            <p>Loading profile ...</p>
+          ) : (
+            <Paper className={classes.paper}>
+              <div className={classes.profile}>
+                <div className="image-wrapper">
+                  <img src={imageUrl} alt="profile" className="profile-image" />
 
-                <input
-                  type="file"
-                  name="image"
-                  id="imageInput"
-                  hidden="hidden"
-                  onChange={this.handleImageChange}
-                />
+                  <input
+                    type="file"
+                    name="image"
+                    id="imageInput"
+                    hidden="hidden"
+                    onChange={this.handleImageChange}
+                  />
+
+                  <MyButton
+                    tip="Edit picture"
+                    onClick={this.handleEditPicture}
+                    btnClassName="button"
+                  >
+                    <EditIcon color="primary" />
+                  </MyButton>
+                </div>
+                <hr />
+                <div className="profile-details">
+                  <MuiLink
+                    component={Link}
+                    to={`/users/${handle}`}
+                    clolor="primary"
+                    variant="h5"
+                  >
+                    @{handle}
+                  </MuiLink>
+                  <hr />
+                  {bio && <Typography variant="body2">{bio}</Typography>}
+                  <hr />
+                  {location && (
+                    <Fragment>
+                      <LocationOn clolor="primary" /> <span>{location}</span>
+                      <hr />
+                    </Fragment>
+                  )}
+                  {website && (
+                    <Fragment>
+                      <LinkIcon color="primary" />
+                      <a
+                        href={website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {" "}
+                        {website}
+                      </a>
+                      <hr />
+                    </Fragment>
+                  )}
+                  <CalendarToday color="primary" />{" "}
+                  <span>Joined {dayjs(createdAt).format("MMM YYYY")}</span>
+                </div>
 
                 <MyButton
-                  tip="Edit picture"
-                  onClick={this.handleEditPicture}
+                  tip="Logout"
+                  onClick={logoutUser}
                   btnClassName="button"
+                  tipPlacement="right"
                 >
-                  <EditIcon color="primary" />
+                  <KeyboardReturn color="primary" />
                 </MyButton>
-              </div>
-              <hr />
-              <div className="profile-details">
-                <MuiLink
-                  component={Link}
-                  to={`/users/${handle}`}
-                  clolor="primary"
-                  variant="h5"
-                >
-                  @{handle}
-                </MuiLink>
-                <hr />
-                {bio && <Typography variant="body2">{bio}</Typography>}
-                <hr />
-                {location && (
-                  <Fragment>
-                    <LocationOn clolor="primary" /> <span>{location}</span>
-                    <hr />
-                  </Fragment>
-                )}
-                {website && (
-                  <Fragment>
-                    <LinkIcon color="primary" />
-                    <a href={website} target="_blank" rel="noopener noreferrer">
-                      {" "}
-                      {website}
-                    </a>
-                    <hr />
-                  </Fragment>
-                )}
-                <CalendarToday color="primary" />{" "}
-                <span>Joined {dayjs(createdAt).format("MMM YYYY")}</span>
-              </div>
 
-              <MyButton
-                tip="Logout"
-                onClick={logoutUser}
-                btnClassName="button"
-                tipPlacement="right"
-              >
-                <KeyboardReturn color="primary" />
-              </MyButton>
-
-              <EditDetails />
-            </div>
-          </Paper>
+                <EditDetails />
+              </div>
+            </Paper>
+          )}
         </AuthGuardWrapper.On>
         <AuthGuardWrapper.Off>
           <Paper className={classes.paper}>

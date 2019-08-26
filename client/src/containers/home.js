@@ -4,16 +4,14 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 import { compose } from "recompose";
 
-// import ReactPullToRefreshWrapper from "../../../shared/components/pulltorefresh/ReactPullToRefreshWrapper";
-
 import Grid from "@material-ui/core/Grid";
 import Profile from "../components/profile/Profile";
+import ScreamList from "../components/scream/ScreamList";
 
 // Reducx stuff
 import { connect } from "react-redux";
 import { getScreams, setAddAction } from "../redux/actions";
 import { ADD_SCREAM } from "../constants";
-import ScreamList from "../components/scream/ScreamList";
 
 const styles = theme => ({
   ...theme
@@ -26,13 +24,11 @@ class Home extends Component {
   }
 
   render() {
-    const { classes, screams /*loading, getScreams*/ } = this.props;
+    const { classes, screams } = this.props;
     return (
       <Grid container spacing={16} className={classes.home}>
         <Grid item sm={8} xs={12}>
-          {/* <ReactPullToRefreshWrapper loading={loading} action={getScreams}> */}
           <ScreamList screams={screams} />
-          {/* </ReactPullToRefreshWrapper> */}
         </Grid>
 
         <Grid item sm={4} xs={12}>

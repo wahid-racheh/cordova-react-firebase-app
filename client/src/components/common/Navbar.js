@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import MyButton from "./MyButton";
 import AuthGuardWrapper from "./AuthGuardWrapper";
 import PostScream from "../scream/PostScream";
-// import PostContact from "../../modules/dashboard/components/PostContact";
+import Notifications from "../notifications/Notifications";
 
 // MUI stuff
 import AppBar from "@material-ui/core/AppBar";
@@ -46,9 +46,7 @@ class Navbar extends Component {
                     <HomeIcon />
                   </MyButton>
                 </Link>
-                {/* <MyButton tip="Notifications">
-                  <NotificationsIcon />
-                </MyButton> */}
+                <Notifications />
                 <Link to="/contact">
                   <MyButton tip="Contacts">
                     <HowToRegIcon />

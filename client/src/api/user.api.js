@@ -40,6 +40,12 @@ const UserApi = {
       .post(`${process.env.API_PREFIX}/user`, userDetails)
       .then(handleResponse)
       .catch(handleFailure);
+  },
+  markNotificationsRead(notificationsIds) {
+    return axios
+      .post(`${process.env.API_PREFIX}/user/notifications`, notificationsIds)
+      .then(handleResponse)
+      .catch(handleFailure);
   }
 };
 

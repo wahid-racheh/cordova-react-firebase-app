@@ -3,12 +3,16 @@
 import React from "react";
 import { connect } from "react-redux";
 import { componentHasChild } from "../../helpers";
+import PropTypes from "prop-types";
 
 class AuthGuardWrapper extends React.Component {
-  static On = ({ authenticated, children }) =>
-    authenticated ? children : null;
-  static Off = ({ authenticated, children }) =>
-    authenticated ? null : children;
+  static On = ({ authenticated, children }) => {
+    return authenticated ? children : null;
+  };
+
+  static Off = ({ authenticated, children }) => {
+    return authenticated ? null : children;
+  };
 
   render() {
     // we're trying to let people render the components they want within the AuthGuardWrapper component.
@@ -30,6 +34,10 @@ class AuthGuardWrapper extends React.Component {
     });
   }
 }
+
+AuthGuardWrapper.propTypes = {
+  authenticated: PropTypes.bool.isRequired
+};
 
 export default connect(state => ({ authenticated: state.user.authenticated }))(
   AuthGuardWrapper
