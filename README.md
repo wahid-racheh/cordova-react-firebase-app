@@ -12,6 +12,9 @@ The app contains 3 main packages:
 
 https://cordova-react-firebase.netlify.com/
 
+username : test@test.com
+password : testtest
+
 ## System Requirements
 
 - [Git][git] v2.22.0 or greater
