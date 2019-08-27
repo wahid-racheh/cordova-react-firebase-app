@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 // import {withState, withHandlers, compose} from recompose";
-import ScreamSkeleton from "../common/ScreamSkeleton";
+import ScreamSkeleton from "./ScreamSkeleton";
 import Scream from "./Scream";
 
 class ScreamList extends Component {

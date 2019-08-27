@@ -26,7 +26,7 @@ import { compose } from "recompose";
 import { connect } from "react-redux";
 import { logoutUser, uploadImage } from "../../redux/actions";
 
-import ProfileSkeleton from "../common/ProfileSkeleton";
+import ProfileSkeleton from "./ProfileSkeleton";
 
 const styles = theme => ({
   ...theme

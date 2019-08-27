@@ -13,8 +13,8 @@ import { connect } from "react-redux";
 import { getUserDataByUserHandle } from "../redux/actions";
 
 import reloadable from "../components/common/reloadable";
-import ScreamSkeleton from "../components/common/ScreamSkeleton";
-import ProfileSkeleton from "../components/common/ProfileSkeleton";
+import ScreamSkeleton from "../components/scream/ScreamSkeleton";
+import ProfileSkeleton from "../components/profile/ProfileSkeleton";
 
 const styles = theme => ({
   ...theme
