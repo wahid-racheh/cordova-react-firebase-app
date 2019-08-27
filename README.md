@@ -8,6 +8,10 @@ The app contains 3 main packages:
 - Mobile: the cordova mobile application
 - Server: the express firebase application
 
+### Live demo
+
+https://cordova-react-firebase.netlify.com/
+
 ## System Requirements
 
 - [Git][git] v2.22.0 or greater
