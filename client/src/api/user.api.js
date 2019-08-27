@@ -11,11 +11,18 @@ const UserApi = {
   signupUser(newUserData) {
     return axios
       .post(`${process.env.API_PREFIX}/auth/signup`, newUserData)
-      .then(handleResponse);
+      .then(handleResponse)
+      .catch(handleFailure);
   },
   getUserData() {
     return axios
       .get(`${process.env.API_PREFIX}/user`)
+      .then(handleResponse)
+      .catch(handleFailure);
+  },
+  getUserDataByUserHandle(userHandle) {
+    return axios
+      .get(`${process.env.API_PREFIX}/user/${userHandle}`)
       .then(handleResponse)
       .catch(handleFailure);
   },
@@ -32,6 +39,12 @@ const UserApi = {
   editUserDetails(userDetails) {
     return axios
       .post(`${process.env.API_PREFIX}/user`, userDetails)
+      .then(handleResponse)
+      .catch(handleFailure);
+  },
+  markNotificationsRead(notificationsIds) {
+    return axios
+      .post(`${process.env.API_PREFIX}/user/notifications`, notificationsIds)
       .then(handleResponse)
       .catch(handleFailure);
   }

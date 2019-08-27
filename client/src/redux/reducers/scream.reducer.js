@@ -6,7 +6,8 @@ import {
   LOADING_SCREAMS,
   SET_USER,
   DELETE_SCREAM,
-  POST_SCREAM
+  POST_SCREAM,
+  POST_COMMENT
 } from "../types";
 
 const initialState = {
@@ -53,7 +54,7 @@ export default function(state = initialState, action) {
       let index = state.screams.findIndex(scream => isEqual(scream.screamId));
       state.screams[index] = action.payload;
       if (isEqual(state.scream.screamId)) {
-        state.scream = action.payload;
+        state.scream = { ...state.scream, ...action.payload };
       }
       return {
         ...state
@@ -67,6 +68,14 @@ export default function(state = initialState, action) {
       return {
         ...state,
         screams: [action.payload, ...state.screams]
+      };
+    case POST_COMMENT:
+      return {
+        ...state,
+        scream: {
+          ...state.scream,
+          comments: [action.payload, ...state.scream.comments]
+        }
       };
     default:
       return { ...state };

@@ -1,7 +1,10 @@
 {
   "region": "europe-west1",
   "apiPrefix": "/api",
-  "whitelist": ["https://cordova-react-firebase.netlify.com"],
+  "whitelist": [
+    "https://cordova-react-firebase.netlify.com",
+    "http://127.0.0.1:8081"
+  ],
   "privateCertificate": {
     "type": "service_account",
     "project_id": "socialapp-d2a96",

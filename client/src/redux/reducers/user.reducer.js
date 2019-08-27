@@ -5,7 +5,10 @@ import {
   LOADING_USER,
   END_LOADING_USER,
   LIKE_SCREAM,
-  UNLIKE_SCREAM
+  UNLIKE_SCREAM,
+  SET_SELECTED_USER,
+  STOP_LOADING_USER,
+  MARK_NOTIFICATIONS_READ
 } from "../types";
 
 const initialState = {
@@ -13,6 +16,7 @@ const initialState = {
   credentials: {},
   likes: [],
   notifications: [],
+  selectedUser: {},
 
   // This loading is different from UI loading
   loading: false
@@ -39,10 +43,20 @@ export default function(state = initialState, action) {
         ...state,
         loading: true
       };
+    case STOP_LOADING_USER:
+      return {
+        ...state,
+        loading: false
+      };
     case END_LOADING_USER:
       return {
         ...state,
         loading: false
+      };
+    case SET_SELECTED_USER:
+      return {
+        ...state,
+        selectedUser: action.payload
       };
     case LIKE_SCREAM:
       return {
@@ -61,6 +75,11 @@ export default function(state = initialState, action) {
         likes: state.likes.filter(
           like => like.screamId !== action.payload.screamId
         )
+      };
+    case MARK_NOTIFICATIONS_READ:
+      state.notifications.forEach(notification => (notification.read = true));
+      return {
+        ...state
       };
     default:
       return { ...state };

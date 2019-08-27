@@ -9,7 +9,8 @@ import {
   DELETE_SCREAM,
   POST_SCREAM,
   SET_ERRORS,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  POST_COMMENT
 } from "../types";
 
 export const getScreams = () => (dispatch, getState, { api }) => {
@@ -85,9 +86,28 @@ export const postScream = newScream => (dispatch, getState, { api }) => {
         type: POST_SCREAM,
         payload: data
       });
+      dispatch(clearErrors());
+    })
+    .catch(error => {
       dispatch({
-        type: CLEAR_ERRORS
+        type: SET_ERRORS,
+        payload: error
       });
+    });
+};
+
+export const postComment = (screamId, commentData) => (
+  dispatch,
+  getState,
+  { api }
+) => {
+  api.ScreamApi.postComment(screamId, commentData)
+    .then(data => {
+      dispatch({
+        type: POST_COMMENT,
+        payload: data
+      });
+      dispatch(clearErrors());
     })
     .catch(error => {
       dispatch({

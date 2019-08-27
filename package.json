@@ -10,6 +10,7 @@
     "init:mobile": "cd mobile && npm run init",
     "setup": "node ./scripts/verify && npm run init-config-files && npm run init:deps && npm run build",
     "start": "cd client && npm run start",
+    "start:dist": "cd client && npm run start:local-server",
     "build": "cd client && npm run build",
     "test": "cd client && npm run test",
     "device": "cd mobile && cordova prepare && cordova run android --device",

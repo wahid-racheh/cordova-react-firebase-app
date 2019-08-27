@@ -2,7 +2,7 @@ import jwtDecode from "jwt-decode";
 import axios from "axios";
 import { isSmart } from "../utils/utility";
 import { SET_AUTHENTICATED } from "../redux/types";
-import { logoutUser, getUserData, stopSync } from "../redux/actions";
+import { logoutUser, getUserData } from "../redux/actions";
 
 export function handleResponse(response) {
   console.log("########### response ###########");
@@ -21,6 +21,9 @@ export function handleFailure(failure) {
     const {
       response: { data, status, statusText }
     } = failure;
+    if (status === 403) {
+      window.location.href = "/login";
+    }
     if (typeof data === "string" && (status === 404 || status === 504)) {
       return Promise.reject({ general: status + " : " + statusText });
     }
@@ -48,13 +51,7 @@ export const setAuthorization = store => {
 
 export const setServerOrigin = origin => {
   if (origin) {
-    axios.interceptors.request.use(config => {
-      const { url } = config;
-      return {
-        ...config,
-        url: origin + url
-      };
-    });
+    axios.defaults.baseURL = origin;
   }
 };
 
