@@ -11,7 +11,8 @@ const UserApi = {
   signupUser(newUserData) {
     return axios
       .post(`${process.env.API_PREFIX}/auth/signup`, newUserData)
-      .then(handleResponse);
+      .then(handleResponse)
+      .catch(handleFailure);
   },
   getUserData() {
     return axios
