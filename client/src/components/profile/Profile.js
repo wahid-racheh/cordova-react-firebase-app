@@ -26,6 +26,8 @@ import { compose } from "recompose";
 import { connect } from "react-redux";
 import { logoutUser, uploadImage } from "../../redux/actions";
 
+import ProfileSkeleton from "../common/ProfileSkeleton";
+
 const styles = theme => ({
   ...theme
 });
@@ -54,7 +56,7 @@ class Profile extends Component {
       <AuthGuardWrapper>
         <AuthGuardWrapper.On>
           {!handle ? (
-            <p>Loading profile ...</p>
+            <ProfileSkeleton />
           ) : (
             <Paper className={classes.paper}>
               <div className={classes.profile}>

@@ -13,10 +13,9 @@ const reloadable = WrappedComponent => {
     componentWillReceiveProps(nextProps) {
       const { location } = this.props;
       const { location: nextLocation } = nextProps;
-
       if (
         location &&
-        nextLocation.pathname === location.pathname &&
+        //nextLocation.pathname === location.pathname &&
         nextLocation.search === location.search &&
         nextLocation.hash === location.hash &&
         nextLocation.key !== location.key

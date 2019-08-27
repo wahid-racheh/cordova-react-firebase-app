@@ -76,11 +76,16 @@
     "webpack-manifest-plugin": "2.0.4",
     "workbox-webpack-plugin": "4.2.0"
   },
+  "devDependencies": {
+    "xml2js": "^0.4.19",
+    "http-serve": "^1.0.1"
+  },
   "scripts": {
     "set-mobile-runtime": "node scripts/set-mobile-runtime.js",
     "cp-mobile-runtime": "node scripts/cp-mobile-runtime.js",
     "proxy": "node scripts/proxy.js",
     "start": "npm run proxy && node scripts/start.js",
+    "start:dist": "npm run build && cd dist && http-server -p 8081",
     "build": "npm run proxy && npm run set-mobile-runtime && node scripts/build.js && npm run cp-mobile-runtime",
     "test": "npm run proxy && node scripts/test.js",
     "init": "npm i"
@@ -149,8 +154,5 @@
     "presets": [
       "react-app"
     ]
-  },
-  "devDependencies": {
-    "xml2js": "^0.4.19"
   }
 }

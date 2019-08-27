@@ -13,6 +13,8 @@ import { connect } from "react-redux";
 import { getUserDataByUserHandle } from "../redux/actions";
 
 import reloadable from "../components/common/reloadable";
+import ScreamSkeleton from "../components/common/ScreamSkeleton";
+import ProfileSkeleton from "../components/common/ProfileSkeleton";
 
 const styles = theme => ({
   ...theme
@@ -36,7 +38,7 @@ class User extends Component {
     const { screamIdParam } = this.state;
 
     const screamsMarkup = loading ? (
-      <p>Loading data ...</p>
+      <ScreamSkeleton />
     ) : screams === null ? (
       <p>No scream from this user</p>
     ) : (
@@ -48,17 +50,20 @@ class User extends Component {
         }
       })
     );
+
+    const profileMarkup = !profile.handle ? (
+      <ProfileSkeleton />
+    ) : (
+      <StaticProfile profile={profile} />
+    );
+
     return (
       <Grid container spacing={16}>
         <Grid item sm={8} xs={12}>
           {screamsMarkup}
         </Grid>
         <Grid item sm={4} xs={12}>
-          {!profile.handle ? (
-            <p>Loading profile ...</p>
-          ) : (
-            <StaticProfile profile={profile} />
-          )}
+          {profileMarkup}
         </Grid>
       </Grid>
     );

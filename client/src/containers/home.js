@@ -24,11 +24,11 @@ class Home extends Component {
   }
 
   render() {
-    const { classes, screams } = this.props;
+    const { classes, screams, loading } = this.props;
     return (
       <Grid container spacing={16} className={classes.home}>
         <Grid item sm={8} xs={12}>
-          <ScreamList screams={screams} />
+          <ScreamList screams={screams} loading={loading} />
         </Grid>
 
         <Grid item sm={4} xs={12}>
