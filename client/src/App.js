@@ -23,6 +23,7 @@ import Home from "./containers/home";
 import Login from "./containers/login";
 import Signup from "./containers/signup";
 import User from "./containers/user";
+import Contact from "./containers/contact";
 
 const theme = createMuiTheme(themeFile);
 
@@ -52,6 +53,7 @@ class App extends Component {
                   path="/users/:handle/scream/:screamId/:notificationId"
                   component={User}
                 />
+                <Route exact path="/contact" component={Contact} />
                 {/* exact does'nt work in cordova application <Route exact={true}  path="/" component={Home} /> */}
                 <Route exact path="/" component={Home} />
               </Switch>

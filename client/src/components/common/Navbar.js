@@ -15,9 +15,11 @@ import Button from "@material-ui/core/Button";
 // Icons
 import HomeIcon from "@material-ui/icons/Home";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import HowToRegIcon from "@material-ui/icons/HowToReg";
 
 import { logoutUser } from "../../redux/actions";
 import { ADD_SCREAM, ADD_CONTACT } from "../../constants";
+import { isSmart } from "../../utils/utility";
 
 class Navbar extends Component {
   isActionOf = action => {
@@ -33,6 +35,15 @@ class Navbar extends Component {
     const addButtonWrapper = this.isActionOf(ADD_SCREAM) ? (
       <PostScream />
     ) : this.isActionOf(ADD_CONTACT) ? null : null; //TODO: <PostContact />
+
+    const contactMarkup = isSmart() ? (
+      <Link to="/contact">
+        <MyButton tip="Contacts">
+          <HowToRegIcon />
+        </MyButton>
+      </Link>
+    ) : null;
+
     return (
       <AppBar position="fixed">
         <Toolbar className="nav-container">
@@ -46,6 +57,7 @@ class Navbar extends Component {
                   </MyButton>
                 </Link>
                 <Notifications />
+                {contactMarkup}
                 <MyButton tip="Logout" onClick={this.doLogout}>
                   <ExitToAppIcon />
                 </MyButton>
