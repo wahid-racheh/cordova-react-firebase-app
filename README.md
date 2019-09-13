@@ -35,10 +35,6 @@ $ firebase --version
 $ cordova --version
 ```
 
-If you have trouble with any of these, learn more about the PATH environment
-variable and how to fix it here for [windows][win-path] or
-[mac/linux][mac-path].
-
 You can follow the cordova configuration [here](https://www.dev2qa.com/how-to-set-android-sdk-path-in-windows-and-mac/).
 
 ## Setup
